@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
+
 import { HttpClient } from '@angular/common/http';
 import { map, filter } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-table-reservation',
   standalone: true,
   imports: [],
   templateUrl: './table-reservation.component.html',
+
   styleUrl: './table-reservation.component.css'
 })
 export class TableReservationComponent {
@@ -26,4 +29,5 @@ export class TableReservationComponent {
     );
 
   }
+
 }
