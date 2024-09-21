@@ -28,15 +28,17 @@ import {NgForOf} from "@angular/common";
 })
 export class TableReservationComponent {
   httpClient: HttpClient ;
-  serverLink: string = "http://localhost:3003/";
+  serverLink: string = "http://localhost:9500/";
 
   table:Table={"number":'2', "taken":false} as Table;
 
 tables:Table[] =[
+  {"number":'1', "taken":false},
   {"number":'2', "taken":false},
-  {"number":'2', "taken":false},
-  {"number":'2', "taken":false},
-  {"number":'2', "taken":false}] as Table[];
+  {"number":'3', "taken":false},
+  {"number":'4', "taken":false},
+  {"number":'5', "taken":false},
+  {"number":'6', "taken":false}] as Table[];
   constructor(private http: HttpClient) {
     this.httpClient = http ;
   }
@@ -47,7 +49,10 @@ tables:Table[] =[
     this.http.get<any[]>(this.serverLink+"dining/tables").pipe(
       map(data => data.filter(item => item.number >5))
     ).subscribe({
-      next: (response :any)=>{console.log(response);return response;},
+      next: (response :any)=>{
+        this.tables=response;
+
+        console.log(response);return response;},
       error:(error:any) => { console.log("eroooooor",error); }
     }
     );
