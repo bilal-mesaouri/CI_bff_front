@@ -1,1 +1,22 @@
-<p>table-reservation works!</p>
+<div class="container p-3">
+  <div class="d-flex flex-wrap justify-content-center w-100">
+    <!-- Go Back button with icon -->
+    <button class="btn btn-outline-primary mb-3" (click)="goBack()">
+      <i class="bi bi-arrow-left"></i> Go Back
+    </button>
+
+    <!-- Table buttons grid -->
+    <div class="row w-100">
+      <div class="col-6 mb-3 d-flex justify-content-center" *ngFor="let table of tableData">
+        <app-table
+        [number]="table.number"
+        [disabled]="table.taken">
+      </app-table>
+      </div>
+    </div>
+
+    <!-- Confirm Reservation button -->
+    <button class="btn btn-success mt-3" (click)="confirmReservation()">Confirm Reservation</button>
+  </div>
+</div>
+

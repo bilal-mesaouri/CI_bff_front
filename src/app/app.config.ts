@@ -5,7 +5,9 @@ import { provideHttpClient } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
+import { provideStore } from '@ngrx/store';
+import { reservationReducer } from './components/table-reservation/reservation.reducer';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(),provideHttpClient()]
+  providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(), provideStore({ reservation: reservationReducer })]
 };
