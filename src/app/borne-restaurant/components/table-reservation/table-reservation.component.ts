@@ -7,6 +7,9 @@ import {MatCheckbox} from "@angular/material/checkbox";
 import {TableComponent} from "../../shared/table/table.component";
 import {Table} from "../../model/model";
 import {NgForOf} from "@angular/common";
+import { StoreService } from '../../services/store.service';
+import { CommonModule } from '@angular/common';
+
 
 
 @Component({
@@ -21,7 +24,8 @@ import {NgForOf} from "@angular/common";
     MatCardHeader,
     MatCheckbox,
     TableComponent,
-    NgForOf
+    NgForOf,
+    CommonModule
   ],
   templateUrl: './table-reservation.component.html',
   styleUrl: './table-reservation.component.css'
@@ -33,13 +37,19 @@ export class TableReservationComponent {
   table:Table={"number":'2', "taken":false} as Table;
 
 tables:Table[] =[
-  {"number":'1', "taken":false},
+  {"number":'1', "taken":true},
   {"number":'2', "taken":false},
   {"number":'3', "taken":false},
   {"number":'4', "taken":false},
   {"number":'5', "taken":false},
   {"number":'6', "taken":false}] as Table[];
-  constructor(private http: HttpClient) {
+numberOfCustomers: number | undefined;
+  numberOfTables: number | undefined;
+
+  selectedCount = 0;
+
+
+  constructor(private http: HttpClient,private storeService: StoreService) {
     this.httpClient = http ;
   }
 
@@ -56,6 +66,14 @@ tables:Table[] =[
       error:(error:any) => { console.log("eroooooor",error); }
     }
     );
+    this.numberOfCustomers=this.storeService.getNumberOfPeople();
+    this.numberOfTables=Math.ceil(this.numberOfCustomers / 4);
 
+
+
+  }
+  onSelectionChange() {
+    // Met à jour le compteur de tables sélectionnées
+    this.selectedCount = this.tables.filter(table => table.selected).length;
   }
 }

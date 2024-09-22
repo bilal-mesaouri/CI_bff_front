@@ -1,15 +1,20 @@
 import { Component } from '@angular/core';
+import {CommonModule} from "@angular/common";
+import {Router} from "@angular/router";
+import {MatIconModule} from "@angular/material/icon";
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'app-customer-count',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, MatIconModule],
   templateUrl: './customer-count.component.html',
-  styleUrl: './customer-count.component.css'
+  styleUrl: './customer-count.component.scss'
 })
+
 export class CustomerCountComponent {
   count: string = '0';
-
+  constructor(private router: Router,private storeService: StoreService) {}
   increment() {
     this.count = (parseInt(this.count) + 1).toString();
   }
@@ -37,4 +42,8 @@ export class CustomerCountComponent {
     this.count = this.count.length > 1 ? this.count.slice(0, -1) : '0';  // Delete the last character
   }
 
+  validateButton() {
+    this.storeService.setNumberOfPeople(parseInt(this.count, 10));
+    this.router.navigate(['/table-reservation']);
+  }
 }

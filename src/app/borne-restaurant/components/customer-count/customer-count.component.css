@@ -23,6 +23,18 @@
   text-align: center;
 }
 
+
+button.mat-raised-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    font-size: 24px;
+  margin-right: 8px;
+  }
+}
+
 .back-button {
   font-size: 24px;
   background: none;
