@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
 import { StoreService } from '../../services/store.service';
 
+
 @Component({
   selector: 'app-customer-count',
   standalone: true,

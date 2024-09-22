@@ -1,32 +1,23 @@
 <div class="container">
-    <mat-card class="home-card" appearance="outlined">
-        <mat-card-header>
-            <mat-card-title>you can choose up to {{numberOfTables}} tables</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-<div class="tables-container grid"  >
-  <div class="grid" *ngFor="let table of tables">
-    <div class="col-3">
-      <mat-card appearance="outlined" class="table">
-        <mat-card-title >Table {{ table.number }}</mat-card-title>
-        <mat-checkbox [disabled]="table.taken || (selectedCount >= numberOfTables && !table.selected)"
-                      (change)="onSelectionChange()"
-                    
-        >
-        </mat-checkbox>
-      </mat-card >
-
-
-
-    </div>
-
-  </div>
-
-</div>
-        </mat-card-content>
-
-
-    </mat-card>
-
-
+  <mat-card class="home-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>You can choose up to {{ numberOfTables }} tables</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="tables-container grid">
+        <div class="grid" *ngFor="let table of tables">
+          <div class="col-3">
+            <mat-card appearance="outlined" class="table" [ngClass]="{'table-available': !table.taken, 'table-taken': table.taken}">
+              <mat-card-title>Table {{ table.number }}</mat-card-title>
+              <mat-checkbox
+                [(ngModel)]="table.selected"
+                (change)="onSelectionChange()"
+                [disabled]="table.taken || (selectedCount >= numberOfTables && !table.selected)">
+              </mat-checkbox>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

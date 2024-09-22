@@ -19,11 +19,11 @@
   padding-left: 20px;
 }
 .taken {
-  background-color: grey; /* Grey color for taken tables */
-  color: white; /* Optional: text color for better contrast */
+  background-color: grey;
+  color: white;
 }
 
 .available {
-  background-color: green; /* Green color for available tables */
-  color: white; /* Optional: text color for better contrast */
+  background-color: green;
+  color: white; 
 }
