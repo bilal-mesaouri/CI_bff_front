@@ -10,6 +10,7 @@ import { TableComponent } from '../../shared/table/table.component';
 import { Table } from '../../model/model';
 import { StoreService } from '../../services/store.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-reservation',
@@ -45,7 +46,7 @@ export class TableReservationComponent {
   numberOfTables: number = 0;
   selectedCount: number = 0;
 
-  constructor(private http: HttpClient, private storeService: StoreService) {}
+  constructor(private http: HttpClient, private storeService: StoreService,private router: Router) {}
 
   ngOnInit(): void {
     this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
@@ -64,5 +65,8 @@ export class TableReservationComponent {
 
   onSelectionChange() {
     this.selectedCount = this.tables.filter(table => table.selected).length;
+  }
+  navigateToNextPage() {
+    this.router.navigate(['/menu']);
   }
 }
