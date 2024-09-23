@@ -1,13 +1,13 @@
 <div class="container">
   <mat-card class="home-card" appearance="outlined">
     <mat-card-header>
-      <mat-card-title>You can choose up to {{ numberOfTables }} tables</mat-card-title>
+      <mat-card-title class="mb-4">You can choose up to {{ numberOfTables }} tables</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="tables-container grid">
-        <div class="grid" *ngFor="let table of tables">
-          <div class="col-3">
-            <mat-card appearance="outlined" class="table" [ngClass]="{'table-available': !table.taken, 'table-taken': table.taken}">
+        <div class="col-4" *ngFor="let table of tables">
+
+            <mat-card appearance="outlined" class="table " [ngClass]="{'table-available': !table.taken, 'table-taken': table.taken}">
               <mat-card-title>Table {{ table.number }}</mat-card-title>
               <mat-checkbox
                 [(ngModel)]="table.selected"
@@ -16,8 +16,10 @@
               </mat-checkbox>
             </mat-card>
           </div>
-        </div>
+       <button >Validate</button>
+
       </div>
     </mat-card-content>
+
   </mat-card>
 </div>

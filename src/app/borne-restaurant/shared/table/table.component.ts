@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {MatCard, MatCardTitle} from "@angular/material/card";
 import {MatCheckbox} from "@angular/material/checkbox";
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-table',
@@ -8,7 +9,8 @@ import {MatCheckbox} from "@angular/material/checkbox";
     imports: [
         MatCard,
         MatCardTitle,
-        MatCheckbox
+        MatCheckbox,
+      ButtonModule
     ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'

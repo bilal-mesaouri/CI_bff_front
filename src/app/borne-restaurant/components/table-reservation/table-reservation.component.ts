@@ -48,9 +48,7 @@ export class TableReservationComponent {
   constructor(private http: HttpClient, private storeService: StoreService) {}
 
   ngOnInit(): void {
-    this.http.get<Table[]>(this.serverLink + "dining/tables").pipe(
-      map(data => data.filter(item => parseInt(item.number,10) > 5))
-    ).subscribe({
+    this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
       next: (response: Table[]) => {
         this.tables = response;
         console.log(response);
