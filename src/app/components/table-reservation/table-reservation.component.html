@@ -10,7 +10,7 @@
       <div class="col-6 mb-3 d-flex justify-content-center" *ngFor="let table of tableData">
         <app-table
         [number]="table.number"
-        [disabled]="table.taken">
+        [disabled]="type === 'reservation' ? table.taken : false">
       </app-table>
       </div>
     </div>

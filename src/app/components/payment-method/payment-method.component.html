@@ -1,0 +1,41 @@
+<div *ngIf="selectedTables.length">
+    <h3>Selected Tables:</h3>
+    <div class="table-buttons">
+      <!-- Loop through the selected tables to display buttons -->
+      <button *ngFor="let table of selectedTables" (click)="selectTable(table)">
+        Table {{ table }}
+      </button>
+    </div>
+  
+    <div *ngIf="selectedTable">
+      <h4>Selected Table: {{ selectedTable }}</h4>
+      <label>Would you like to pay for:</label>
+      <button (click)="choosePaymentMethod('whole')">Whole Table</button>
+      <button (click)="choosePaymentMethod('individual')">Each Client</button>
+    </div>
+  
+    <!-- Display bill for the whole table if 'whole' payment method is selected -->
+    <div *ngIf="paymentMethod === 'whole'">
+      <h4>Bill for Entire Table:</h4>
+      <p>Total: {{ calculateTotal() | currency }}</p>
+      <button (click)="processPayment()">Pay Now</button>
+    </div>
+  
+    <!-- Display individual clients for payment if 'individual' payment method is selected -->
+    <div *ngIf="paymentMethod === 'individual'">
+      <h4>Select a Client to Pay:</h4>
+      
+      <!-- Only show clients for the selected table -->
+      <div *ngFor="let client of getClientsForSelectedTable()">
+        <button (click)="selectClient(client)">{{ client.name }}</button>
+      </div>
+      
+      <!-- Show the bill for the selected client -->
+      <div *ngIf="selectedClient">
+        <h4>Bill for {{ selectedClient.name }}:</h4>
+        <p>Total: {{ calculateClientTotal(selectedClient) | currency }}</p>
+        <button (click)="processClientPayment(selectedClient)">Pay Now</button>
+      </div>
+    </div>
+  </div>
+  
