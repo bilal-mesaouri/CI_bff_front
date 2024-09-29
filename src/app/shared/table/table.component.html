@@ -7,8 +7,8 @@
     'btn-primary': !disabled && isSelected(number)
   }"
   [attr.disabled]="disabled ? true : null" 
-  (click)="!disabled && toggleTableSelection(number)"
-  [style.width.px]="50" 
+  (click)="toggleTableSelection(number)"
+  [style.width.px]="100" 
   [style.height.px]="50"
   [style.fontSize.px]="20">
   {{ number }}

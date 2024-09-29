@@ -1,96 +1,165 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
-import { Inject, PLATFORM_ID } from '@angular/core';
+import { clearSelectedTables } from '../table-reservation/reservation.actions'; // Adjust the path as necessary
+import { HttpClient } from '@angular/common/http';
+import { TableButtonComponent } from '../../shared/table/table.component';
+import { Observable, take } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { ReservationState } from '../table-reservation/reservation.reducer';
+import { error } from 'node:console';
+import { ClientRequest } from 'node:http';
+
 @Component({
   standalone: true,
   selector: 'app-payment-method',
   templateUrl: './payment-method.component.html',
   styleUrls: ['./payment-method.component.css'],
-  imports: [CommonModule]
+  imports: [TableButtonComponent, CommonModule]
 })
-export class PaymentMethodComponent {
-  selectedTables: number[] = []; // Will be populated from route
+export class PaymentMethodComponent implements OnInit{
+
+
+  commandId: number | null = null; // Will be populated from route
   selectedTable: number | null = null;
-  paymentMethod: 'whole' | 'individual' | null = null;
-  clients: { table: number; client: { name: string, amount: number }[] }[] = []; // Structured clients by table
-  selectedClient: any = null;
-  storage: Storage | null = null;  // Declare this.storage with proper type
+  selectedTables$ = this.store.select((state) => state.reservation.selectedTables);
+  tables:Array<any>=[];
+  payTablesBill:Array<any>=[];
+  tablesTotal:number=0;
+  
+  payAll: boolean = false;
+  
+  serverLink: string = 'http://localhost:3003/dining';
+  
+  
+  showAlert = false;
+  alertMessage :string = "";
 
-  constructor(private route: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: any) {
-    // Get selectedTables from route parameters
-    this.route.params.subscribe(params => {
-      const selectedTablesParam = params['selectedTables'];
-      this.selectedTables = selectedTablesParam ? JSON.parse(selectedTablesParam) : [];
+
+
+  constructor(private route: ActivatedRoute, private httpClient: HttpClient,    private store: Store<{ reservation: ReservationState }>,
+  ) {
+    // Get commandId from route parameters
+  }
+
+
+
+  ngOnInit(): void {
+    // Get commandId from route parameters
+    console.log("##### ON INIT");
+    this.route.params.pipe(take(1)).subscribe(params => {
+      const commandIdParam = params['commandId'];
+      this.commandId = commandIdParam ? Number(commandIdParam) : null; // Use Number() to parse to a number
+      // if (this.commandId) {
+      this.loadClientsFromReservations(1234);
+      // }
     });
+  }
 
-    if (isPlatformBrowser(this.platformId) && typeof window !== 'undefined' && window.localStorage) {
-        this.storage = window.localStorage;
-      } else {
-        this.storage = null; // Or handle this case accordingly
+  loadClientsFromReservations(commandId: number): void {
+    this.httpClient.get<any>(`${this.serverLink}/command/${commandId}/tables`).pipe(take(1)).subscribe({
+      next: (response: any) => {
+        this.tables = response.tables; // Adjust based on your API response structure
+        console.log(this.tables);
+      },
+      error: (error: any) => {
+        console.error('Error fetching tables:', error);
+        // Optional: Display error message to the user
       }
-
-    // Fetch reservations from local storage
-    this.loadClientsFromReservations();
-    console.log(this.clients);
-  }
-
-  loadClientsFromReservations() {
-    const reservation = this.storage?.getItem("Reservations");
-    const reservationsArray = reservation ? JSON.parse(reservation) : [];
-
-    // Assuming each reservation has a table number, count of clients, and clients field
-    this.clients = this.selectedTables.map(table => {
-      const tableReservation = reservationsArray.find((res: { tableNumber: number; }) => res.tableNumber === table);
-      const clientCount = tableReservation ? tableReservation.count : 0;
-
-      // Create clients with a fixed amount of 40 for each
-      const clientList = Array.from({ length: clientCount }, (_, index) => ({
-        name: `Client ${index + 1}`, // Name each client
-        amount: 40 // Fixed amount for each client
-      }));
-      return {
-        table: table,
-        client: clientList // Assign clients if available
-      };
     });
-  }
-
-  getClientsForSelectedTable() {
-    const table = this.clients.find(c => c.table === this.selectedTable);
-    return table ? table.client : [];
   }
   
-  selectTable(table: number) {
-    this.selectedTable = table; // Set the currently selected table
-    this.paymentMethod = null; // Reset payment method selection
-    this.selectedClient = null; // Reset selected client
+
+  
+  selectTable(table: number, tablePaid: boolean) {
+    if(tablePaid)
+      this.triggerAlert("table already paid");
+    else{
+      this.closeAlert();
+      this.selectedTables$.pipe(take(1)).subscribe({
+        next: (selectedTables) => {
+          console.log('Selected Tables:', selectedTables);
+          if(selectedTables.length == 1){
+            this.selectedTable = table;
+            this.payAll = false;
+          }
+          else if(selectedTables.length>1){
+            this.selectedTable = null;
+            this.payAll = true ;
+            this.calculateTotal(selectedTables);
+          }else{
+            this.payAll = false;
+            this.selectedTable = null;
+          }
+        },
+        error: (error) => {
+          console.log('Error in selectedTables$', error);
+        }
+      });
+    }
   }
 
-  choosePaymentMethod(method: 'whole' | 'individual') {
-    this.paymentMethod = method;
+
+  choosePaymentMethod(method: 'whole' | 'individual' | 'multipleTables') {
+    //send to other screen with different values
   }
 
-  calculateTotal(): number {
-    // Logic to calculate total for the whole table
-    const tableClients = this.clients.find(c => c.table === this.selectedTable);
-    return tableClients ? tableClients.client.reduce((sum, client) => sum + client.amount, 0) : 0;
-  }
+  calculateTotal(selectedTables:number[]): number {
+    this.httpClient.post(this.serverLink+"/payment/byTable",{
+      "commandId":1234,
+      "selectedTables":selectedTables
+    }
+  ).pipe(take(1))
+  .subscribe({
+    next: (response:any) => {
+      console.log(response);
+      this.payTablesBill = response.tablesBill;
+      this.tablesTotal = response.commandTotal;
+    },
+    error: (error) => {
+      console.log('Error:', error);
+    }});
 
-  selectClient(client: any) {
-    this.selectedClient = client;
+    return 0;
   }
-
-  calculateClientTotal(client: any): number {
-    return client.amount; // Example logic
-  }
-
   processPayment() {
-    console.log('Processing payment for entire table...');
+    console.log('Processing payment for the entire table...');
+  
+    this.selectedTables$.pipe(take(1)).subscribe({
+      next: (selectedTables) => {
+        console.log('Selected Tables:', selectedTables);
+        this.httpClient.post(this.serverLink + "/payment/process/byTables", {
+          "commandId": 1234,
+          "paidTables": selectedTables
+        }).subscribe({
+          next: (response) => {
+            console.log('Payment processed successfully:', response);
+            this.store.dispatch(clearSelectedTables());
+            this.ngOnInit();
+          },
+          error: (error) => this.logError(error)
+        });
+      },
+      error: (error) => this.logError(error)
+    });
+  }
+  
+
+
+
+  triggerAlert(alertMessage: string) {
+    this.alertMessage = alertMessage ;
+    this.showAlert = true;
+    // Auto-close after 5 seconds (5000ms)
+    setTimeout(() => {
+      this.closeAlert();
+    }, 5000);
   }
 
-  processClientPayment(client: any) {
-    console.log('Processing payment for', client.name);
+  closeAlert() {
+    this.showAlert = false;
+  }
+  logError(error:any){
+    console.log('Error in selectedTables$', error);
   }
 }
