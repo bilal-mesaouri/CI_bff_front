@@ -3,6 +3,10 @@ import {CommonModule} from "@angular/common";
 import {Router} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
 import { StoreService } from '../../services/store.service';
+import { MenuServiceService } from '../../services/menu-service.service'; // Adjust path as necessary
+import { Table } from '../../model/model';
+import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -14,12 +18,37 @@ import { StoreService } from '../../services/store.service';
 })
 
 export class CustomerCountComponent {
+  serverLink: string = "http://localhost:9500/";
+  tables: Table[] = [] as Table[];
   count: string = '0';
-  constructor(private router: Router,private storeService: StoreService) {}
+  countEmptyTables:number=0;
+  requiredNumberOfTables:number=0;
+
+  constructor(private router: Router,private storeService: StoreService,private http: HttpClient,private snackBar: MatSnackBar) {}
   increment() {
     this.count = (parseInt(this.count) + 1).toString();
   }
+  ngOnInit(): void {
+    this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
+      next: (response: Table[]) => {
+        this.tables = response;
+        console.log(response);
+        this.countEmptyTables = this.tables.filter(table => !table.taken).length;
+      },
+      error: (error: any) => {
+        console.log("Error fetching tables", error);
+      }
+    });
 
+
+  }
+  openSnackBar(message: string, action: string = 'Close') {
+    this.snackBar.open(message, action, {
+      duration: 3000, // Duration in milliseconds
+      horizontalPosition: 'right', // Can be 'start', 'center', 'end', 'left', or 'right'
+      verticalPosition: 'top', // Can be 'top' or 'bottom'
+    });
+  }
   decrement() {
     const currentCount = parseInt(this.count);
     if (currentCount > 0) {
@@ -44,7 +73,15 @@ export class CustomerCountComponent {
   }
 
   validateButton() {
-    this.storeService.setNumberOfPeople(parseInt(this.count, 10));
-    this.router.navigate(['/table-reservation']);
+    this.requiredNumberOfTables=Math.ceil(parseInt(this.count, 10) / 4);
+    if(this.requiredNumberOfTables>this.countEmptyTables){
+      console.log("herrrrrrre",this.requiredNumberOfTables);
+      console.log(this.countEmptyTables);
+    this.openSnackBar("There is not enough available tables,please wait!");
+    }
+    else{
+      this.storeService.setNumberOfPeople(parseInt(this.count, 10));
+      this.router.navigate(['/table-reservation']);
+    }
   }
 }

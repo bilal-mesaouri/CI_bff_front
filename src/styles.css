@@ -2,3 +2,11 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.start-button{
+  margin-top: 20px;
+  color: white;
+  background-color: #4a90e2;;
+}
+.start-button:hover {
+  background-color: #357ab6;
+}

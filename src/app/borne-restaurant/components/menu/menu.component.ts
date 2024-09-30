@@ -4,18 +4,20 @@ import { CommonModule } from '@angular/common';
 
 import { MenuItem } from '../../model/MenuItem';
 import { MenuItemComponent } from '../../shared/menu-item/menu-item.component';
-
+import { CartComponent } from '../cart/cart.component';
+import {HeaderComponent} from "../header/header.component";
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule,MenuItemComponent],
+  imports: [CommonModule, MenuItemComponent, CartComponent, HeaderComponent],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent implements OnInit{
   items: MenuItem[] = [];
   cart: MenuItem[] = [];
+  isPopupVisible: boolean = false;
 
   constructor(  public menuServiceService: MenuServiceService) {}
 
@@ -122,9 +124,13 @@ export class MenuComponent implements OnInit{
   }
 
 
-  onCartClick(): void {
-    console.log('Cart clicked!');
+  openPopup() {
+    this.isPopupVisible = true;
+  }
 
+  // Méthode pour fermer le popup
+  closePopup() {
+    this.isPopupVisible = false;
   }
 
 }

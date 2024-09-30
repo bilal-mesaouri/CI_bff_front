@@ -1,13 +1,7 @@
-<p>Menu works!</p>
+<app-header></app-header>
 
-<!-- Boutons pour filtrer les items par catégorie -->
 <div class="filter-buttons">
   <button (click)="displayAllItems()">All</button>
-  <button (click)="displayItemsByType('STARTER')">Starters</button>
-  <button (click)="displayItemsByType('MAIN')">Main</button>
-  <button (click)="displayItemsByType('BEVERAGE')">Drinks</button>
-  <button (click)="displayItemsByType('DESSERT')">Desserts</button>
-
 </div>
 
 
@@ -21,13 +15,19 @@
 </div>
 
 
-<div class="cart" *ngIf="cart.length > 0" (click)="onCartClick()">
+<div class="cart" *ngIf="cart.length > 0" (click)="openPopup()">
   <h2>Your Cart</h2>
   <div class="cart-items">
     <div *ngFor="let item of cart" class="cart-item">
-      <p>{{ item.fullName }} - Quantity: {{ item.quantity }}</p>
+      <p>{{ item.shortName }} - Quantity: {{ item.quantity }}</p>
     </div>
   </div>
   <p>Total: {{ getTotal() }} €</p>
   <button (click)="validateCart()">Validate Cart</button>
 </div>
+
+<app-cart
+  [cart]="cart"
+  [isVisible]="isPopupVisible"
+  (closePopupEvent)="closePopup()">
+</app-cart>
