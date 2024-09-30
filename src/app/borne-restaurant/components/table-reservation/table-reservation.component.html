@@ -5,9 +5,9 @@
     </mat-card-header>
     <mat-card-content>
       <div class="tables-container grid">
-        <div class="col-4" *ngFor="let table of tables">
+        <div class="col-4" *ngFor="let table of tables" >
 
-            <mat-card appearance="outlined" class="table " [ngClass]="{'table-available': !table.taken, 'table-taken': table.taken}">
+            <mat-card appearance="outlined" class="table " [ngClass]="{'taken': table.taken || table.selected, 'available': !table.taken && !table.selected}">
               <mat-card-title>Table {{ table.number }}</mat-card-title>
               <mat-checkbox
                 [(ngModel)]="table.selected"
@@ -25,6 +25,8 @@
 
       </div>
     </mat-card-content>
+
+
 
   </mat-card>
 </div>

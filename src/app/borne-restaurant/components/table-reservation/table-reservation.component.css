@@ -26,3 +26,12 @@
   background-color: green;
   color: white;
 }
+.taken {
+  background-color: grey; /* Couleur pour les tables prises */
+  color: white;
+}
+
+.available {
+  background-color: green; /* Couleur pour les tables disponibles */
+  color: white;
+}

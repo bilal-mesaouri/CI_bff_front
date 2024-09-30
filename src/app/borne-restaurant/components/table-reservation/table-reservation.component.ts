@@ -11,6 +11,7 @@ import { Table } from '../../model/model';
 import { StoreService } from '../../services/store.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MenuServiceService } from '../../services/menu-service.service';
 
 @Component({
   selector: 'app-table-reservation',
@@ -33,20 +34,13 @@ import { Router } from '@angular/router';
 export class TableReservationComponent {
   serverLink: string = "http://localhost:9500/";
 
-  tables: Table[] = [
-    { number: '1', taken: true, selected: false },
-    { number: '2', taken: false, selected: false },
-    { number: '3', taken: false, selected: false },
-    { number: '4', taken: false, selected: false },
-    { number: '5', taken: false, selected: false },
-    { number: '6', taken: false, selected: false }
-  ] as Table[];
+  tables: Table[] = [] as Table[];
 
   numberOfCustomers: number = 0;
   numberOfTables: number = 0;
   selectedCount: number = 0;
 
-  constructor(private http: HttpClient, private storeService: StoreService,private router: Router) {}
+  constructor(private http: HttpClient, private storeService: StoreService,private router: Router,private menuServiceService: MenuServiceService ) {}
 
   ngOnInit(): void {
     this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
@@ -67,6 +61,19 @@ export class TableReservationComponent {
     this.selectedCount = this.tables.filter(table => table.selected).length;
   }
   navigateToNextPage() {
+   this.createOrder();
     this.router.navigate(['/menu']);
+  }
+  createOrder() {
+    // Appel du service avec un numéro de table et un nombre de clients
+    this.menuServiceService.createTableOrder(12, 1) // Exemple avec tableNumber: 1, customersCount: 1
+      .subscribe(
+        response => {
+          console.log('Réponse du serveur:', response);  // Afficher la réponse du backend
+        },
+        error => {
+          console.error('Erreur:', error);  // Gérer l'erreur
+        }
+      );
   }
 }
