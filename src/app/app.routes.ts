@@ -14,7 +14,7 @@ export const routes: Routes = [
     { path: 'customer-count', component: CustomerCountComponent, data:{type:"customerCount"} },
     { path: 'orderId', component: CustomerCountComponent, data:{type:"orderId"} },
     { path: 'table-reservation', component: TableReservationComponent },
-  { path: 'customer-counter', component: CustomerCounterComponent},
+    { path: 'customer-counter', component: CustomerCounterComponent},
 
 
 ];

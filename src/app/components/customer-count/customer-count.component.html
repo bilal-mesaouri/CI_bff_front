@@ -4,7 +4,9 @@
   </div>
 
   <div class="counter-section">
-    <div class="count-display">{{ count }}</div>  <!-- Display the current count -->
+    <button *ngIf="type=='customerCount'" class="decrement" (click)="decrement()">-</button>
+    <div class="count-display">{{ count }}</div> 
+    <button *ngIf="type=='customerCount'" class="increment" (click)="increment()">+</button> 
   </div>
 
   <div class="number-pad">
