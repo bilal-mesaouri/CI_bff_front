@@ -26,13 +26,11 @@ export class PaymentReviewComponent {
   constructor(
       private route: ActivatedRoute,
       private httpClient: HttpClient,
-      @Inject(PLATFORM_ID) private platformId: any
   ) {
-    if (isPlatformBrowser(this.platformId) && typeof window !== 'undefined' && window.localStorage) {
-      this.storage = window.localStorage;
-    } else {
-      this.storage = null;
-    }
+
+  }
+  ngOnInit(): void {
+
 
 
     this.route.params.subscribe(params => {
@@ -41,7 +39,9 @@ export class PaymentReviewComponent {
       console.log("Table Number from URL:", this.tableNumber);
       this.loadCommandFromFile(this.commandId);  // Charger les données JSON depuis le serveur
     });
+    
   }
+
   loadCommandFromFile(commandId:number) {
 
     this.httpClient.get<any>(`${this.serverLink}/command/${commandId}/tables`).pipe(take(1)).subscribe({
@@ -79,18 +79,32 @@ export class PaymentReviewComponent {
 
   payOrder() {
 
+    var paidClients: number[]= [];
     this.selectedClients.forEach(client => {
-      client.clientPaid = true;
+      paidClients.push(client.client);
     });
+    console.log(this.selectedClients);
+    this.httpClient.post(`${this.serverLink}/pay-clients`,{
+      "commandId":this.commandId,
+      "tableNumber":this.tableNumber,
+      "paidClients":paidClients
+    }).subscribe({
+      next:()=>{
+        console.log("paid")
+        this.ngOnInit();
+      },
+      error:()=>{
 
+      }
+    })
 
     this.selectedClients = [];
 
 
-    this.checkIfTableIsPaid();
+    // this.checkIfTableIsPaid();
 
 
-    this.saveCommandToStorage();
+
   }
 
   checkIfTableIsPaid() {
@@ -99,13 +113,6 @@ export class PaymentReviewComponent {
   }
 
 
-  saveCommandToStorage() {
-    const commandIndex = this.command.tables.findIndex((table: any) => +table.tableNumber === this.tableNumber);
-    this.command.tables[commandIndex] = this.selectedTable;
-
-    this.storage?.setItem("Command", JSON.stringify([this.command]));  // Sauvegarder dans le localStorage
-    console.log("Commande mise à jour sauvegardée dans le localStorage :", this.command);
-  }
 
   isClientSelected(client: any): boolean {
     return this.selectedClients.includes(client);

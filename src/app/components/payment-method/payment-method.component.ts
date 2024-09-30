@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 export class PaymentMethodComponent implements OnInit{
 
 
-  commandId: number | null = 1234; // Will be populated from route
+  commandId: number  = 0; // Will be populated from route
   selectedTable: number | null = null;
   selectedTables$ = this.store.select((state) => state.reservation.selectedTables);
   tables:Array<any>=[];
@@ -48,11 +48,8 @@ export class PaymentMethodComponent implements OnInit{
     // Get commandId from route parameters
     console.log("##### ON INIT");
     this.route.params.pipe(take(1)).subscribe(params => {
-      const commandIdParam = params['commandId'];
-      this.commandId = commandIdParam ? Number(commandIdParam) : null; // Use Number() to parse to a number
-      // if (this.commandId) {
-      this.loadClientsFromReservations(1234);
-      // }
+      const commandId = parseInt(params['commandId']);
+      this.loadClientsFromReservations(commandId);
     });
   }
 
