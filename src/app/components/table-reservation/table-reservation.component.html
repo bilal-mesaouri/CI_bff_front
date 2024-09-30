@@ -1,34 +1,42 @@
 <div class="container">
-  <mat-card class="home-card" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title class="mb-4">You can choose up to {{ numberOfTables }} tables</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="tables-container grid">
-        <div class="col-3" *ngFor="let table of tables" style="padding: 10px;">
-          <mat-card appearance="outlined" class="table" [ngClass]="{'taken': table.taken || table.selected, 'available': !table.taken && !table.selected}">
+  <mat-card class="home-card">
+
+    <h1>You can select up to {{ numberOfTables }} tables</h1>
+
+
+    <div class="tables-container grid">
+      <div class="col-4" *ngFor="let table of tables">
+        <mat-card
+          class="table"
+          [ngClass]="{'taken': table.taken || table.selected, 'available': !table.taken && !table.selected}"
+        >
+          <mat-card-header>
             <mat-card-title>Table {{ table.number }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Capacity: 4 people</p>
             <mat-checkbox
+              class="table-checkbox"
               [(ngModel)]="table.selected"
               (change)="onSelectionChange()"
-              [disabled]="table.taken || (selectedCount >= numberOfTables && !table.selected)">
+              [disabled]="table.taken || (selectedCount >= numberOfTables && !table.selected)"
+            >
+              Select
             </mat-checkbox>
-          </mat-card>
-        </div>
-        
-        <div class="col-12" style="text-align: center; margin-top: 20px;">
-          <button
-            class="start-button"
-            mat-raised-button
-            (click)="navigateToNextPage()"
-            [disabled]="!canNavigate()"
-          >Next</button>
-        </div>
+          </mat-card-content>
+        </mat-card>
       </div>
-      
-    </mat-card-content>
 
 
-
+      <button
+        mat-raised-button
+        color="primary"
+        class="start-button"
+        [disabled]="selectedCount !== numberOfTables"
+        (click)="navigateToNextPage()"
+      >
+        Next
+      </button>
+    </div>
   </mat-card>
 </div>

@@ -1,46 +1,41 @@
+/* table-reservation.component.css */
 
-.home-card {
-  display: flex;
-}
-.container{
+.container {
+  padding: 20px;
 
-  margin-top: 30px;
-  width: 100%;
 }
-.tables-container{
+
+.tables-container {
   display: flex;
   flex-wrap: wrap;
+  gap: 30px;
+  padding: 60px;
+  background-color: #f5a623;
 
 }
-.tables-container .col-3 {
-  flex: 0 0 25%; /* Takes up 25% of the row for four items */
-  max-width: 25%; /* Ensures that each item doesn't exceed 25% */
-  padding: 10px; /* Add padding for better spacing */
+
+.table {
+  width: 100%;
 }
-.table{
-  width: 150px;
-  height: 150px;
-  padding-left: 20px;
-}
+
 .taken {
-  background-color: grey;
+  background-color: #aaaaaa; /* Couleur pour les tables réservées */
   color: white;
 }
 
 .available {
-  background-color: green;
-  color: white;
-}
-.taken {
-  background-color: grey; /* Couleur pour les tables prises */
-  color: white;
-}
-
-.available {
-  background-color: green; /* Couleur pour les tables disponibles */
+  background-color: #4a90e2;/* Couleur pour les tables disponibles */
   color: white;
 }
 
 .start-button {
-  margin-top: 20px; /* Space above the button */
+  margin-top: 20px;
+  color: white;
+  background-color: #4a90e2;;
+}
+.start-button:hover {
+  background-color: #357ab6;
+}
+.table-checkbox .mat-checkbox-label {
+  color: #ff5722 !important;
 }
