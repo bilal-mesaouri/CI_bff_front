@@ -1,0 +1,33 @@
+<app-header></app-header>
+
+<div class="filter-buttons">
+  <button (click)="displayAllItems()">All</button>
+</div>
+
+
+<div class="menu-container">
+  <div *ngFor="let item of items" class="menu-item">
+    <app-menu-item
+      [item]="item"
+      (quantityChanged)="handleQuantityChange($event)">
+    </app-menu-item>
+  </div>
+</div>
+
+
+<div class="cart" *ngIf="cart.length > 0" (click)="openPopup()">
+  <h2>Your Cart</h2>
+  <div class="cart-items">
+    <div *ngFor="let item of cart" class="cart-item">
+      <p>{{ item.shortName }} - Quantity: {{ item.quantity }}</p>
+    </div>
+  </div>
+  <p>Total: {{ getTotal() }} €</p>
+  <button (click)="validateCart()">Validate Cart</button>
+</div>
+
+<app-cart
+  [cart]="cart"
+  [isVisible]="isPopupVisible"
+  (closePopupEvent)="closePopup()">
+</app-cart>
