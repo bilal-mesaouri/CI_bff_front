@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.order {
+  background-color: #f5a623;
+}
+
+.order:hover {
+  background-color: #e18b09;
+}
+
+.pay {
+  background-color: #4a90e2;
+}
+
+.pay:hover {
+  background-color: #357ab6;
+}
+
+h1 {
+  font-size: 2rem;
+  color: white;
+  text-align: center;
+}
