@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { ReservationState } from '../table-reservation/reservation.reducer';
 import { error } from 'node:console';
 import { ClientRequest } from 'node:http';
-
+import { Router } from '@angular/router';
 @Component({
   standalone: true,
   selector: 'app-payment-method',
@@ -20,7 +20,7 @@ import { ClientRequest } from 'node:http';
 export class PaymentMethodComponent implements OnInit{
 
 
-  commandId: number | null = null; // Will be populated from route
+  commandId: number | null = 1234; // Will be populated from route
   selectedTable: number | null = null;
   selectedTables$ = this.store.select((state) => state.reservation.selectedTables);
   tables:Array<any>=[];
@@ -38,7 +38,7 @@ export class PaymentMethodComponent implements OnInit{
 
 
   constructor(private route: ActivatedRoute, private httpClient: HttpClient,    private store: Store<{ reservation: ReservationState }>,
-  ) {
+  private router: Router) {
     // Get commandId from route parameters
   }
 
@@ -100,8 +100,10 @@ export class PaymentMethodComponent implements OnInit{
   }
 
 
-  choosePaymentMethod(method: 'whole' | 'individual' | 'multipleTables') {
+  choosePaymentMethod() {
     //send to other screen with different values
+    console.log("navigqting",this.selectedTable);
+    this.router.navigate([`/payment-review`, this.commandId, this.selectedTable]);
   }
 
   calculateTotal(selectedTables:number[]): number {
@@ -112,6 +114,7 @@ export class PaymentMethodComponent implements OnInit{
   ).pipe(take(1))
   .subscribe({
     next: (response:any) => {
+      console.log("heloooooo");
       console.log(response);
       this.payTablesBill = response.tablesBill;
       this.tablesTotal = response.commandTotal;
@@ -135,6 +138,7 @@ export class PaymentMethodComponent implements OnInit{
           next: (response) => {
             console.log('Payment processed successfully:', response);
             this.store.dispatch(clearSelectedTables());
+            this.selectedTable = null ;
             this.ngOnInit();
           },
           error: (error) => this.logError(error)

@@ -17,7 +17,7 @@
         <app-table
           [number]="table.tableNumber"
           [disabled]="table.tablePaid"
-          (click)="selectTable(table, table.tablePaid)">
+          (click)="selectTable(table.tableNumber, table.tablePaid)">
         </app-table>
       </div>
     </div>
@@ -29,7 +29,7 @@
     <label class="mb-2">Would you like to pay for:</label>
     <div>
       <button class="btn btn-primary me-2" (click)="processPayment()">Whole Table</button>
-      <button class="btn btn-secondary" (click)="choosePaymentMethod('individual')">Each Client</button>
+      <button class="btn btn-secondary" (click)="choosePaymentMethod()">Each Client</button>
     </div>
   </div>
 
