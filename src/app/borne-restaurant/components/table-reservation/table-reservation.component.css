@@ -1,37 +1,41 @@
+/* table-reservation.component.css */
 
-.home-card {
+.container {
+  padding: 20px;
 
 }
-.container{
+
+.tables-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-}
-.tables-container{
-
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 60px;
+  background-color: #f5a623;
 
 }
-.table{
-  width: 150px;
-  height: 150px;
-  padding-left: 20px;
+
+.table {
+  width: 100%;
 }
+
 .taken {
-  background-color: grey;
+  background-color: #aaaaaa; /* Couleur pour les tables réservées */
   color: white;
 }
 
 .available {
-  background-color: green;
-  color: white;
-}
-.taken {
-  background-color: grey; /* Couleur pour les tables prises */
+  background-color: #4a90e2;/* Couleur pour les tables disponibles */
   color: white;
 }
 
-.available {
-  background-color: green; /* Couleur pour les tables disponibles */
+.start-button {
+  margin-top: 20px;
   color: white;
+   background-color: #4a90e2;;
+}
+.start-button:hover {
+  background-color: #357ab6;
+}
+.table-checkbox .mat-checkbox-label {
+  color: #ff5722 !important;
 }
