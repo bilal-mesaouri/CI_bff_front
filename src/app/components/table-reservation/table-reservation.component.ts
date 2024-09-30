@@ -1,95 +1,87 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TableButtonComponent } from '../../shared/table/table.component';
-import { NgForOf, Location, CommonModule } from '@angular/common';
-
-import {
-  selectTable,
-  unselectTable,
-} from '../../components/table-reservation/reservation.actions';
-import { ReservationState } from '../../components/table-reservation/reservation.reducer';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { map, filter } from 'rxjs/operators';
-import { take } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { MatButton } from "@angular/material/button";
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from "@angular/material/card";
+import { MatCheckbox } from "@angular/material/checkbox";
+import { NgForOf } from "@angular/common";
+import { CommonModule } from '@angular/common';
+import { TableComponent } from '../../shared/table-for-reservation/table/table.component';
+import { Table } from '../../model/model';
+import { StoreService } from '../../services/store.service';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MenuServiceService } from '../../services/menu-service.service';
 
 @Component({
   selector: 'app-table-reservation',
   standalone: true,
-  imports: [TableButtonComponent, NgForOf, CommonModule],
+  imports: [
+    MatButton,
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
+    MatCheckbox,
+    TableComponent,
+    NgForOf,
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './table-reservation.component.html',
-  styleUrl: './table-reservation.component.css',
+  styleUrls: ['./table-reservation.component.css'] // Use styleUrls, not styleUrl
 })
 export class TableReservationComponent {
-  serverLink: string = 'http://localhost:3003/';
-  tableData: any[] = [];
-  selectedTables$: Observable<number[]>;
-  type:string = "";
+  serverLink: string = "http://localhost:9500/";
 
-  constructor(
-    private httpClient: HttpClient,
-    private location: Location,
-    private store: Store<{ reservation: ReservationState }>,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
-    this.selectedTables$ = this.store.select(
-      (state) => state.reservation.selectedTables
-    );
-  }
+  tables:any[]=[];
+
+  numberOfCustomers: number = 0;
+  numberOfTables: number = 0;
+  selectedCount: number = 0;
+  selectedTables: number[]=[];
+  constructor(private http: HttpClient, private storeService: StoreService,private router: Router,private menuServiceService: MenuServiceService ) {}
 
   ngOnInit(): void {
-    this.route.data.pipe(take(1)).subscribe(data => {
-      this.type = data["type"];
-      console.log('Flag value:', this.type);
-    });
-    this.httpClient.get<any[]>(this.serverLink + 'dining/tables').subscribe({
-      next: (response: any[]) => {
-        this.tableData = response;
+    this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
+      next: (response: Table[]) => {
+        this.tables = response;
       },
       error: (error: any) => {
-        console.log('Error', error);
-      },
-    });
-  }
-  goBack(): void {
-    this.location.back(); // Navigates to the previous page
-  }
-
-  confirmReservation() {
-    // Log the selected tables for confirmation
-    this.selectedTables$.pipe(take(1)).subscribe({
-      next: (selectedTables) => {
-        console.log('Selected Tables:', selectedTables);
-        if (this.type == "reservation") {
-          this.httpClient.post(this.serverLink + "dining/tables", {
-            "selectedTables": selectedTables 
-          })
-          .pipe(take(1))
-          .subscribe({
-            next: (response:any) => {
-              console.log('Response:', response);
-              var reservation = localStorage.getItem("Reservations");
-              var reservationsArray = reservation ? JSON.parse(reservation) : [];
-              reservationsArray.push(...response.reservations); 
-              localStorage.setItem("Reservations", JSON.stringify(reservationsArray));
-            },
-            error: (error) => {
-              console.log('Error:', error);
-            }
-          });
-          
-        } else {
-          this.router.navigate(['/payment-method', { selectedTables: JSON.stringify(selectedTables) }]);
-        }
-      },
-      error: (error) => {
-        console.log('Error in selectedTables$', error);
+        console.log("eroooooor", error);
       }
     });
+
+    this.numberOfCustomers = this.storeService.getNumberOfPeople();
+    this.numberOfTables = Math.ceil(this.numberOfCustomers / 4);
+    
   }
-  
-  
+
+  onSelectionChange() {
+    this.selectedCount = this.tables.filter(table => table.selected).length;
+    this.selectedTables = []; 
+    this.tables.filter(table => table.selected).forEach(table=>
+      this.selectedTables.push(table.number)
+    );
+  }
+  navigateToNextPage() {
+   this.createOrder();
+    //this.router.navigate(['/menu']);
+  }
+  createOrder() {
+    // Appel du service avec un numéro de table et un nombre de clients
+    this.menuServiceService.createTableOrder(this.selectedTables, this.numberOfCustomers) // Exemple avec tableNumber: 1, customersCount: 1
+      .subscribe(
+        response => {
+          console.log('Réponse du serveur:', response);  // Afficher la réponse du backend
+        },
+        error => {
+          console.error('Erreur:', error);  // Gérer l'erreur
+        }
+      );
+  }
+  canNavigate(): boolean {
+    // Enable navigation if at least one table is selected
+    return this.selectedCount > 0 && this.selectedCount <= this.numberOfTables;
+  }
 }

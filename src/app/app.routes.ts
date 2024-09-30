@@ -6,11 +6,12 @@ import { PaymentReviewComponent } from './components/payment-review/payment-revi
 import { CustomerCountComponent } from './components/customer-count/customer-count.component';
 export const routes: Routes = [    
     { path: '', component: HomeComponent},
-    { path: 'table-reservation', component: TableReservationComponent, data:{type:"reservation"}},
     { path: 'table-payment', component: TableReservationComponent, data:{type:"payment"} },
     { path: 'payment-method/:commandId', component: PaymentMethodComponent },
     { path: 'payment-review/:orderId/:tableNumber', component: PaymentReviewComponent },
-    { path: 'customer-count', component: CustomerCountComponent },
+    { path: 'customer-count', component: CustomerCountComponent, data:{type:"customerCount"} },
+    { path: 'orderId', component: CustomerCountComponent, data:{type:"orderId"} },
+    { path: 'table-reservation', component: TableReservationComponent },
 
 
 ];

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {Router} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
-
+import { StoreService } from '../../services/store.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-customer-count',
   standalone: true,
@@ -13,7 +14,12 @@ import {MatIconModule} from "@angular/material/icon";
 
 export class CustomerCountComponent {
   count: string = '0';
-  constructor(private router: Router) {}
+  type:string = "";
+  constructor(private router: Router, private storeService: StoreService, private route: ActivatedRoute) {
+    this.route.data.subscribe(data => {
+      this.type = data['type'];
+    });
+  }
   increment() {
     this.count = (parseInt(this.count) + 1).toString();
   }
@@ -42,6 +48,13 @@ export class CustomerCountComponent {
   }
 
   validateButton() {
-    this.router.navigate(['/payment-method', this.count]);
+    if (this.type == "customerCount") {
+      this.storeService.setNumberOfPeople(parseInt(this.count, 10));
+      this.router.navigate(['/table-reservation']);
+    }
+    else{
+      this.router.navigate(['/payment-method', this.count]);
+    }
+
   }
 }
