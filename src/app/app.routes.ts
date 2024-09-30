@@ -12,19 +12,13 @@ export const routes: Routes = [
     { path: '', component: HomeComponent},
     { path: 'table-reservation', component: TableReservationComponent, data:{type:"reservation"}},
     { path: 'table-payment', component: TableReservationComponent, data:{type:"payment"} },
-    { path: 'payment-method', component: PaymentMethodComponent },
-  { path: 'table-categories', component: TableCategoriesComponent },
-  { path: 'payment-method', component: PaymentMethodComponent },
-  { path: 'menu', component: MenuComponent},
-  { path: 'customer-counter', component: CustomerCountComponent},
-  { path: 'table-reservation', component: TableReservationComponent },
-  { path: 'header', component: HeaderComponent },
-  { path: 'category', component: CategoryComponent }
+    { path: 'table-categories', component: TableCategoriesComponent },
+    { path: 'menu', component: MenuComponent},
+    { path: 'table-reservation', component: TableReservationComponent },
+    { path: 'header', component: HeaderComponent },
+    { path: 'category', component: CategoryComponent },
     { path: 'payment-method/:commandId', component: PaymentMethodComponent },
     { path: 'payment-review/:orderId/:tableNumber', component: PaymentReviewComponent },
     { path: 'customer-count', component: CustomerCountComponent, data:{type:"customerCount"} },
-    { path: 'orderId', component: CustomerCountComponent, data:{type:"orderId"} },
-    { path: 'table-reservation', component: TableReservationComponent },
-
-
+    { path: 'orderId', component: CustomerCountComponent, data:{type:"orderId"} }
 ];

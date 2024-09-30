@@ -15,6 +15,6 @@ export class HomeComponent {
   constructor(private router: Router) {}
 
   navigateToNextPage() {
-    this.router.navigate(['/customer-counter']);
+    this.router.navigate(['/customer-count']);
   }
 }
