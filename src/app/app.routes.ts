@@ -8,6 +8,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { CategoryComponent } from './components/category/category.component';
 import { TableCategoriesComponent } from './components/table-categories/table-categories.component';
 import { PaymentReviewComponent } from './components/payment-review/payment-review.component';
+import {CustomerCounterComponent} from './components/customer-counter/customer-counter.component';
 export const routes: Routes = [
     { path: '', component: HomeComponent},
     { path: 'table-reservation', component: TableReservationComponent, data:{type:"reservation"}},
@@ -20,5 +21,9 @@ export const routes: Routes = [
     { path: 'payment-method/:commandId', component: PaymentMethodComponent },
     { path: 'payment-review/:orderId/:tableNumber', component: PaymentReviewComponent },
     { path: 'customer-count', component: CustomerCountComponent, data:{type:"customerCount"} },
-    { path: 'orderId', component: CustomerCountComponent, data:{type:"orderId"} }
+    { path: 'orderId', component: CustomerCountComponent, data:{type:"orderId"} },
+    { path: 'table-reservation', component: TableReservationComponent },
+  { path: 'customer-counter', component: CustomerCounterComponent},
+
+
 ];

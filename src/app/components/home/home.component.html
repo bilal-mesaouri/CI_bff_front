@@ -1,13 +1,9 @@
 <div class="container">
-  <mat-card class="home-card" appearance="outlined">
-    <mat-card-content>
-      <button
-        class="start-button"
-        mat-raised-button
-        disabledInteractive
-        (click)="navigateToNextPage()"
-      >Click here to Start</button></mat-card-content>
+  <div class="section order" (click)="navigateToNextPage()">
+    <h1>Click Here to Order</h1>
+  </div>
 
-  </mat-card>
-
+  <div class="section pay" (click)="navigateToNextPage()">
+    <h1>Click Here to Pay</h1>
+  </div>
 </div>

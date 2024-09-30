@@ -1,15 +1,36 @@
-
-.home-card {
+.container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%; /* Assure-toi que la carte a une hauteur définie */
-  width:400px;
-  height: 600px;
+  flex-direction: column;
+  height: 100vh;
 }
-.container{
+
+.section {
+  flex: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.order {
+  background-color: #f5a623;
+}
+
+.order:hover {
+  background-color: #e18b09;
+}
+
+.pay {
+  background-color: #4a90e2;
+}
+
+.pay:hover {
+  background-color: #357ab6;
+}
+
+h1 {
+  font-size: 2rem;
+  color: white;
+  text-align: center;
 }
