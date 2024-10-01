@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {RouterLink} from "@angular/router";
@@ -16,10 +16,14 @@ import { MenuComponent } from '../menu/menu.component';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   public  categories:Category[]=CATEGORIES
 
   constructor( public menuComponent: MenuComponent) {
+  }
+
+  ngOnInit() {
+    this.displayItemsByTypeAdapter();
   }
 
   displayItemsByType(categoryTitle: string): void {
@@ -40,5 +44,20 @@ export class HeaderComponent {
         this.menuComponent.displayAllItems();
     }
   }
+
+  displayItemsByTypeAdapter(): void {
+    const url = window.location.href;
+    let category = url.split('/').pop();
+    if (category !== undefined) {
+      console.log(category);
+      console.log('category');
+      category=category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+      console.log(category);
+      this.displayItemsByType(category);
+    }else {
+      this.menuComponent.displayAllItems();
+    }
+  }
+
 
 }

@@ -24,6 +24,10 @@ export const routes: Routes = [
     { path: 'orderId', component: CustomerCountComponent, data:{type:"orderId"} },
     { path: 'table-reservation', component: TableReservationComponent },
     { path: 'customer-counter', component: CustomerCounterComponent},
+  { path: 'menu/starters', component: MenuComponent},
+  { path: 'menu/desserts', component: MenuComponent},
+  { path: 'menu/drinks', component: MenuComponent},
+  { path: 'menu/main course', component: MenuComponent}
 
 
 ];
