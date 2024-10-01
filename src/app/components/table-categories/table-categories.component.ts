@@ -1,9 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {CategoryComponent} from "../category/category.component";
 import {Category} from "../../model/Category";
-import {CATEGORIES} from "../../constants";
+import {CATEGORIES} from "../../model/constants";
 import {NgForOf} from "@angular/common";
-import {HeaderComponent} from "../header/header.component";
+import {RouterLink} from "@angular/router";
+import {MatButtonModule} from "@angular/material/button";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @Component({
   selector: 'app-table-categories',
@@ -11,7 +13,9 @@ import {HeaderComponent} from "../header/header.component";
   imports: [
     CategoryComponent,
     NgForOf,
-    HeaderComponent
+    RouterLink,
+    MatToolbarModule,
+    MatButtonModule
   ],
   templateUrl: './table-categories.component.html',
   styleUrl: './table-categories.component.scss'
@@ -21,6 +25,7 @@ export class TableCategoriesComponent {
   @Input() personNumber:number=1;
   public  categories:Category[]=CATEGORIES
   constructor() {
-    console.log(this.categories)
   }
+
+
 }

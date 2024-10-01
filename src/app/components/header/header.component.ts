@@ -3,7 +3,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {RouterLink} from "@angular/router";
 import {Category} from "../../model/Category";
-import {CATEGORIES} from "../../constants";
+import {CATEGORIES} from "../../model/constants";
 import {CategoryComponent} from "../category/category.component";
 import {NgForOf} from "@angular/common";
 import { MenuComponent } from '../menu/menu.component';
@@ -12,7 +12,8 @@ import { MenuComponent } from '../menu/menu.component';
   selector: 'app-header',
   standalone: true,
   imports: [MatToolbarModule,
-    MatButtonModule, RouterLink, CategoryComponent, NgForOf],  templateUrl: './header.component.html',
+    MatButtonModule, RouterLink, CategoryComponent, NgForOf],
+  templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {

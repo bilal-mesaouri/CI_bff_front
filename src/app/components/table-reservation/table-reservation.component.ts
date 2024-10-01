@@ -81,7 +81,8 @@ export class TableReservationComponent {
     this.menuServiceService.createTableOrder(this.selectedTables, this.numberOfCustomers) // Exemple avec tableNumber: 1, customersCount: 1
       .subscribe(
         response => {
-          console.log('Réponse du serveur:', response);  // Afficher la réponse du backend
+          console.log('Réponse du serveur:', response);
+          localStorage.setItem('tableOrder', JSON.stringify(response));
         },
         error => {
           console.error('Erreur:', error);  // Gérer l'erreur
