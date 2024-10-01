@@ -26,13 +26,13 @@ export class CartComponent {
     if (event) {
       event.stopPropagation();
     }
-    this.closePopupEvent.emit();  // Emet un événement pour fermer la popup
+    this.closePopupEvent.emit();
   }
 
   validateCart() {
-    // Implémentation de la validation du panier ici
-    localStorage.clear();
-    this.closePopup();  // Ferme le popup après validation
+    this.menuComponent.validateCart();
+    //localStorage.clear();
+    this.closePopup();
   }
 
   increaseQuantity(item: any) {

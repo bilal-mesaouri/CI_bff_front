@@ -15,10 +15,10 @@
 </div>
 
 
-<div class="cart" *ngIf="cart.length > 0" (click)="openPopup()">
+<div class="cart" *ngIf="cart.items.length > 0" (click)="openPopup()">
   <h2>Your Cart</h2>
   <div class="cart-items">
-    <div *ngFor="let item of cart" class="cart-item">
+    <div *ngFor="let item of cart.items" class="cart-item">
       <p>{{ item.shortName }} - Quantity: {{ item.quantity }}</p>
     </div>
   </div>
@@ -27,7 +27,7 @@
 </div>
 
 <app-cart
-  [cart]="cart"
+  [cart]="cart.items"
   [isVisible]="isPopupVisible"
   (closePopupEvent)="closePopup()">
 </app-cart>

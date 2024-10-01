@@ -30,21 +30,31 @@ export class TableCategoriesComponent implements OnInit {
   public table: any;
   public clientNumber: number=1;
   public tableNumber: number | undefined;
-  public tablecompteur: number=0;
+  public tablecompteur: number=0
 
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.getcommand();
+
+    this.getOrder();
     this.gettableByNumber();
     this.tableNumber= this.table.tableNumber;
+    let cart ={
+      orderNumber: this.Order.commandId,
+      clientNumber: this.clientNumber,
+      tableNumber: this.tableNumber,
+      items: []
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    console.log('Cart',cart);
+
   }
 
   displayItemsByType(categoryTitle: string): void {
     this.router.navigate(['/menu', categoryTitle.toLowerCase()])
   }
 
-  getcommand() {
+  getOrder() {
     this.Order = JSON.parse(<string>localStorage.getItem('tableOrder'));
     console.log('Order',this.Order);
   }
@@ -59,15 +69,17 @@ export class TableCategoriesComponent implements OnInit {
 
   incrementClient() {
     this.clientNumber++;
-    if (this.clientNumber > 4) {
+    let numberOfClients = this.table.clients.length;
+    if (this.clientNumber > numberOfClients) {
       this.clientNumber = 1;
+      this.incrementTable();
     }
   }
 
   incrementTable() {
     this.tablecompteur++;
     if (this.tablecompteur > this.Order.tables.length) {
-      this.tableNumber = 1;
+      this.tablecompteur = 0;
     }
   }
 

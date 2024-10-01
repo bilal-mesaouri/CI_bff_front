@@ -1,36 +1,48 @@
 import { Component, OnInit  } from '@angular/core';
 import { MenuServiceService } from '../../services/menu-service.service';
+import { OrderService} from "../../services/order.service";
 import { CommonModule } from '@angular/common';
 
 import { MenuItem } from '../../model/MenuItem';
 import { MenuItemComponent } from '../../shared/menu-item/menu-item.component';
 import { CartComponent } from '../cart/cart.component';
 import {HeaderComponent} from "../header/header.component";
+import {Cart} from "../../model/Cart";
+import { TableOrder } from "../../model/TableOrder";
+import { Router } from '@angular/router';
+import { TableCategoriesComponent } from '../table-categories/table-categories.component';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, MenuItemComponent, CartComponent, HeaderComponent],
+  imports: [CommonModule, MenuItemComponent, CartComponent, HeaderComponent, TableCategoriesComponent],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent implements OnInit{
   items: MenuItem[] = [];
-  cart: MenuItem[] = [];
+  cart: Cart = {
+    orderNumber: 0,
+    clientNumber:0,
+    tableNumber: 0,
+    items:[]
+  };
   isPopupVisible: boolean = false;
 
-  constructor(  public menuServiceService: MenuServiceService) {}
+  constructor(  public menuServiceService: MenuServiceService, public orderServiceService: OrderService,
+                private router: Router, public tableCategoriesComponent:TableCategoriesComponent  ) {}
 
   ngOnInit() {
     this.displayAllItems();
     this.loadCart();
+    console.log('Cart validated', this.cart);
   }
 
   displayAllItems(){
     //console.log('displayAllItems');
     this.menuServiceService.getAllItems().subscribe((data: any) => {
         this.items = data.map((item: MenuItem) => {
-          const cartItem = this.cart.find(i => i._id === item._id);
+          const cartItem = this.cart.items.find(i => i._id === item._id);
           return {
             ...item,
             quantity: cartItem ? cartItem.quantity : 0  // Charger la quantité sauvegardée ou initialiser à 0
@@ -46,7 +58,7 @@ export class MenuComponent implements OnInit{
     console.log(`displayItemsByType: ${type}`);
     this.menuServiceService.getItems(type).subscribe((data: any) => {
         this.items = data.map((item: MenuItem) => {
-          const cartItem = this.cart.find(i => i._id === item._id);
+          const cartItem = this.cart.items.find(i => i._id === item._id);
           return {
             ...item,
             quantity: cartItem ? cartItem.quantity : 0  // Charger la quantité sauvegardée ou initialiser à 0
@@ -81,9 +93,7 @@ export class MenuComponent implements OnInit{
   }
 
   loadCart() {
-    console.log("hello")
     const storedCart = localStorage.getItem('cart');
-    console.log(storedCart)
     if (storedCart) {
       this.cart = JSON.parse(storedCart);
     }
@@ -95,29 +105,34 @@ export class MenuComponent implements OnInit{
 
 
   updateCart(item: MenuItem) {
-    console.log("updateCart")
-    const existingItem = this.cart.find(i => i._id === item._id);
+    const existingItem = this.cart.items.find(i => i._id === item._id);
     if (item.quantity > 0) {
       if (existingItem) {
         existingItem.quantity = item.quantity;
       } else {
-        this.cart.push({ ...item });
+        this.cart.items.push({ ...item });
       }
     } else if (existingItem) {
-      this.cart = this.cart.filter(i => i._id !== item._id);
+      this.cart.items = this.cart.items.filter(i => i._id !== item._id);
     }
     this.updateLocalStorage();
   }
 
   validateCart() {
+
     console.log('Cart validated', this.cart);
-    this.cart = [];
-    localStorage.removeItem('cart');
+    this.orderServiceService.addOrder(this.cart).subscribe((data: any) => {
+      console.log('Order added', data);
+    });
+    this.cart.items = [];
+    //this.tableCategoriesComponent.incrementClient()
+    this.router.navigate(['/table-categories']);
+
   }
 
   getTotal(): number {
     let total = 0;
-    this.cart.forEach(item => {
+    this.cart.items.forEach(item => {
       total += item.price * item.quantity;
     });
     return total;
