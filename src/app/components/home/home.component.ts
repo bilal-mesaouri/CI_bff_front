@@ -16,7 +16,11 @@ export class HomeComponent {
 
   constructor(private router: Router) {}
 
-  navigateToNextPage() {
-    this.router.navigate(['/customer-counter']);
+  navigateToReservation() {
+    this.router.navigate(['/customer-count']);
   }
+  navigateToPayment() {
+    this.router.navigate(['/orderId']);
+  }
+
 }
