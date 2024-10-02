@@ -48,8 +48,8 @@ export class PaymentMethodComponent implements OnInit{
     // Get commandId from route parameters
     console.log("##### ON INIT");
     this.route.params.pipe(take(1)).subscribe(params => {
-      const commandId = parseInt(params['commandId']);
-      this.loadClientsFromReservations(commandId);
+      this.commandId = parseInt(params['commandId']);
+      this.loadClientsFromReservations(this.commandId);
     });
   }
 
@@ -123,19 +123,20 @@ export class PaymentMethodComponent implements OnInit{
     return 0;
   }
   processPayment() {
-    console.log('Processing payment for the entire table...');
-  
+    console.log('Processing payment for the entire table... ',this.commandId);
+    
     this.selectedTables$.pipe(take(1)).subscribe({
       next: (selectedTables) => {
         console.log('Selected Tables:', selectedTables);
         this.httpClient.post(this.serverLink + "/payment/process/byTables", {
-          "commandId": 1234,
+          "commandId": this.commandId,
           "paidTables": selectedTables
         }).subscribe({
           next: (response) => {
             console.log('Payment processed successfully:', response);
             this.store.dispatch(clearSelectedTables());
             this.selectedTable = null ;
+            this.payAll = false ;
             this.ngOnInit();
           },
           error: (error) => this.logError(error)
@@ -162,5 +163,9 @@ export class PaymentMethodComponent implements OnInit{
   }
   logError(error:any){
     console.log('Error in selectedTables$', error);
+  }
+
+  GoHome(){
+    this.router.navigateByUrl('');
   }
 }

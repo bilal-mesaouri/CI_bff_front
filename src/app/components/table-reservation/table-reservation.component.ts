@@ -55,7 +55,13 @@ export class TableReservationComponent {
     this.numberOfCustomers = this.storeService.getNumberOfPeople();
     this.numberOfTables = Math.ceil(this.numberOfCustomers / 4);
   }
-
+  toggleSelection(table: any) {
+    if (!table.taken && !(this.selectedCount >= this.numberOfTables && !table.selected)) {
+      table.selected = !table.selected;
+      this.onSelectionChange();
+    }
+  }
+  
   onSelectionChange() {
     this.selectedCount = this.tables.filter(table => table.selected).length;
     this.selectedTables = [];

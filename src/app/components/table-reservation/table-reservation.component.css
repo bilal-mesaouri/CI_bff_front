@@ -8,9 +8,9 @@
 .tables-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   gap: 30px;
   padding: 60px;
-  background-color: #f5a623;
 
 }
 
@@ -24,7 +24,7 @@
 }
 
 .available {
-  background-color: #4a90e2;/* Couleur pour les tables disponibles */
+  background-color: #06ec19;/* Couleur pour les tables disponibles */
   color: white;
 }
 
@@ -36,6 +36,11 @@
 .start-button:hover {
   background-color: #357ab6;
 }
-.table-checkbox .mat-checkbox-label {
-  color: #ff5722 !important;
+.custom-checkbox:checked {
+  background-color: rgb(0,178,0);
+  border-color: rgb(0,178,0);
+}
+
+.form-check-label {
+  margin-left: 10px; /* You can adjust the value as needed */
 }

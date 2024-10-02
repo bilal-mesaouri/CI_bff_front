@@ -1,4 +1,4 @@
-<div *ngIf="selectedTable">
+<div *ngIf="selectedTable" >
     <h3>Table {{ selectedTable?.tableNumber }} - Statut:
         <span [ngClass]="{'paid': selectedTable.tablePaid, 'unpaid': !selectedTable.tablePaid}">
       {{ selectedTable.tablePaid ? 'Payée' : 'Non payée' }}
@@ -45,7 +45,7 @@
         <div *ngIf="selectedClients.length > 0">
 
             <div class="payment-button-container">
-                <button class="payment-button" (click)="payOrder()">Payer</button>
+                <button class="payment-button " (click)="payOrder()">Payer</button>
             </div>
 
         </div>
