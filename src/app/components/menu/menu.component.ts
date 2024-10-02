@@ -128,6 +128,10 @@ export class MenuComponent implements OnInit{
     if (this.store.getTableCompteur() === this.store.getOrder().tables.length-1 && this.store.getClientNumber() === this.store.getTable().clients.length) {
       this.store.setClientNumber(1);
       this.store.setTableCompteur(0);
+      console.log('Order validated', this.store.getOrder().commandId);
+      this.orderServiceService.validateOrder(this.store.getOrder().commandId).subscribe((data: any) => {
+        console.log('Order validated', data);
+      });
       localStorage.clear();
       this.router.navigate(['/']);
     }else {

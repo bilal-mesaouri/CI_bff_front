@@ -42,7 +42,7 @@ export class TableReservationComponent {
   ) {}
 
   ngOnInit(): void {
-    this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
+    this.http.get<Table[]>("http://localhost:3003/tables").subscribe({
       next: (response: Table[]) => {
         this.tables = response;
         console.log(response);
@@ -61,7 +61,7 @@ export class TableReservationComponent {
       this.onSelectionChange();
     }
   }
-  
+
   onSelectionChange() {
     this.selectedCount = this.tables.filter(table => table.selected).length;
     this.selectedTables = [];

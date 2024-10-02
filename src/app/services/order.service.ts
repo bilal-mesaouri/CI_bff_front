@@ -11,8 +11,13 @@ export class OrderService {
 
 
   addOrder(order: Cart) {
-    console.log('OrderService.addOrder');
-    console.log(order);
     return this.http.post<any>('http://localhost:3003/order', order);
+  }
+
+  validateOrder(commandId: number) {
+
+    const body = { commandId };
+    console.log('body', body);
+    return this.http.post<any>('http://localhost:3003/validateOrder', body);
   }
 }

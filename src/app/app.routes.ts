@@ -9,11 +9,12 @@ import { CategoryComponent } from './components/category/category.component';
 import { TableCategoriesComponent } from './components/table-categories/table-categories.component';
 import { PaymentReviewComponent } from './components/payment-review/payment-review.component';
 import {CustomerCounterComponent} from './components/customer-counter/customer-counter.component';
+
 export const routes: Routes = [
     { path: '', component: HomeComponent},
     { path: 'table-reservation', component: TableReservationComponent, data:{type:"reservation"}},
     { path: 'table-payment', component: TableReservationComponent, data:{type:"payment"} },
-    { path: 'table-categories', component: TableCategoriesComponent },
+    { path: 'table-categories',component: TableCategoriesComponent },
     { path: 'menu', component: MenuComponent},
     { path: 'table-reservation', component: TableReservationComponent },
     { path: 'header', component: HeaderComponent },
