@@ -7,8 +7,8 @@ import {RouterLink, Router} from "@angular/router"; // Import du Router
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import { HeaderComponent } from '../header/header.component';
-import { MenuComponent} from "../menu/menu.component";
-import internal from "node:stream";
+//import { MenuComponent} from "../menu/menu.component";
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'app-table-categories',
@@ -25,24 +25,21 @@ import internal from "node:stream";
 })
 export class TableCategoriesComponent implements OnInit {
   public  categories:Category[]=CATEGORIES
-  @ViewChild(MenuComponent) menuComponent!: MenuComponent;
-  public Order: any;
-  public table: any;
-  public clientNumber: number=1;
-  public tableNumber: number | undefined;
-  public tablecompteur: number=0
+  //@ViewChild(MenuComponent) menuComponent!: MenuComponent;
+  //public Order: any;
+  //public table: any;
+  //public clientNumber: number=1;
+  //public tablecompteur: number=0
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, protected store:StoreService ) {}
 
   ngOnInit() {
-
     this.getOrder();
     this.gettableByNumber();
-    this.tableNumber= this.table.tableNumber;
     let cart ={
-      orderNumber: this.Order.commandId,
-      clientNumber: this.clientNumber,
-      tableNumber: this.tableNumber,
+      orderNumber: this.store.getOrder().commandId,
+      clientNumber: this.store.getClientNumber(),
+      tableNumber: this.store.getTable().tableNumber,
       items: []
     }
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -55,32 +52,22 @@ export class TableCategoriesComponent implements OnInit {
   }
 
   getOrder() {
-    this.Order = JSON.parse(<string>localStorage.getItem('tableOrder'));
-    console.log('Order',this.Order);
+    //this.Order = JSON.parse(<string>localStorage.getItem('tableOrder'));
+    this.store.setOrder(JSON.parse(<string>localStorage.getItem('tableOrder')));
+    console.log('Order',this.store.getOrder());
   }
 
   gettableByNumber() {
-    this.table=this.Order.tables[this.tablecompteur];
+    this.store.setTable(this.store.getOrder().tables[this.store.getTableCompteur()]);
+    console.log('Table',this.store.getTable());
   }
 
   getClientByNymber() {
-    return this.table.clients.find((client: any) => client.client === this.clientNumber);
+    return this.store.getTable().clients.find((client: any) => client.client === this.store.getClientNumber());
   }
 
-  incrementClient() {
-    this.clientNumber++;
-    let numberOfClients = this.table.clients.length;
-    if (this.clientNumber > numberOfClients) {
-      this.clientNumber = 1;
-      this.incrementTable();
-    }
-  }
-
-  incrementTable() {
-    this.tablecompteur++;
-    if (this.tablecompteur > this.Order.tables.length) {
-      this.tablecompteur = 0;
-    }
+  clientNumber() {
+    return this.store.getClientNumber();
   }
 
 

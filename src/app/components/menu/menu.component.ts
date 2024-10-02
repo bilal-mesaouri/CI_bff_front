@@ -8,14 +8,13 @@ import { MenuItemComponent } from '../../shared/menu-item/menu-item.component';
 import { CartComponent } from '../cart/cart.component';
 import {HeaderComponent} from "../header/header.component";
 import {Cart} from "../../model/Cart";
-import { TableOrder } from "../../model/TableOrder";
 import { Router } from '@angular/router';
-import { TableCategoriesComponent } from '../table-categories/table-categories.component';
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, MenuItemComponent, CartComponent, HeaderComponent, TableCategoriesComponent],
+  imports: [CommonModule, MenuItemComponent, CartComponent, HeaderComponent],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
@@ -30,7 +29,7 @@ export class MenuComponent implements OnInit{
   isPopupVisible: boolean = false;
 
   constructor(  public menuServiceService: MenuServiceService, public orderServiceService: OrderService,
-                private router: Router, public tableCategoriesComponent:TableCategoriesComponent  ) {}
+                private router: Router, private store:StoreService ) {}
 
   ngOnInit() {
     this.displayAllItems();
@@ -124,9 +123,17 @@ export class MenuComponent implements OnInit{
     this.orderServiceService.addOrder(this.cart).subscribe((data: any) => {
       console.log('Order added', data);
     });
-    this.cart.items = [];
-    //this.tableCategoriesComponent.incrementClient()
-    this.router.navigate(['/table-categories']);
+
+
+    if (this.store.getTableCompteur() === this.store.getOrder().tables.length-1 && this.store.getClientNumber() === this.store.getTable().clients.length) {
+      this.store.setClientNumber(1);
+      this.store.setTableCompteur(0);
+      localStorage.clear();
+      this.router.navigate(['/']);
+    }else {
+      this.store.incrementClient();
+      this.router.navigate(['/table-categories']);
+    }
 
   }
 
