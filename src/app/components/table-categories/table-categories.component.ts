@@ -70,5 +70,9 @@ export class TableCategoriesComponent implements OnInit {
     return this.store.getClientNumber();
   }
 
+  tableNumber() {
+    return this.store.getTable().tableNumber;
+  }
+
 
 }
