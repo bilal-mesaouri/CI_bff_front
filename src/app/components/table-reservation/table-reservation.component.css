@@ -24,7 +24,7 @@
 }
 
 .available {
-  background-color: #06ec19;/* Couleur pour les tables disponibles */
+  background-color: #7d921c;/* Couleur pour les tables disponibles */
   color: white;
 }
 
@@ -37,8 +37,8 @@
   background-color: #357ab6;
 }
 .custom-checkbox:checked {
-  background-color: rgb(0,178,0);
-  border-color: rgb(0,178,0);
+  background-color: #7d921c;
+  border-color: #7d921c;
 }
 
 .form-check-label {

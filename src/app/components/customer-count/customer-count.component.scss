@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fdfdcc;
+  background-color: #f5a623;
   padding: 20px;
   height: 100vh;
   justify-content: center;
@@ -14,13 +14,14 @@
   align-items: center;
   flex-direction: column;
   padding: 20px;
-  background-color: #f0f0f0;
+  background-color: #4a90e2;;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
   text-align: center;
+  color: white;
 }
 
 
@@ -59,6 +60,7 @@ h2 {
   border: none;
   padding: 10px;
   cursor: pointer;
+  color: white;
 }
 
 .count-display {
@@ -66,6 +68,7 @@ h2 {
   margin: 0 20px;
   height: fit-content;
   padding: 20px;
+  color: white;
 }
 
 .number-pad {
@@ -77,12 +80,13 @@ h2 {
 .number-pad button {
   font-size: 24px;
   padding: 20px;
-  background-color: white;
+  background-color:#4a90e2;
   border: 1px solid #ccc;
   cursor: pointer;
   border-radius: 8px;
+  color: white;
 }
 
 .number-pad button:hover {
-  background-color: #f0f0f0;
+  background-color:  #357ab6;
 }
