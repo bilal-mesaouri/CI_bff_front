@@ -1,13 +1,15 @@
-<div class="container">
-  <mat-card class="home-card">
-
-    <div class="m-2">
-      <h1>You can select up to {{ numberOfTables }} tables</h1>
-    </div>
 
 
-    <div class="tables-container grid">
-      <div class="col-5" *ngFor="let table of tables">
+
+
+
+
+    <div class="table-container container mt-2">
+      <div class="m-2 col-12 text-center">
+        <h1>You can select up to {{ numberOfTables }} tables</h1>
+      </div>
+    <div class="row">
+      <div class="col-6" *ngFor="let table of tables">
         <mat-card
           class="table"
           [ngClass]="{'taken': table.taken || table.selected, 'available': !table.taken && !table.selected}"
@@ -34,18 +36,13 @@
           </mat-card-content>
         </mat-card>
       </div>
-      
+    </div>
 
+      <button mat-flat-button class="next-button"  [disabled]="selectedCount !== numberOfTables"
+              (click)="navigateToNextPage()">Next</button>
 
     </div>
-    <button
-      mat-raised-button
-      color="primary"
-      class="start-button"
-      [disabled]="selectedCount !== numberOfTables"
-      (click)="navigateToNextPage()"
-    >
-      Next
-    </button>
-  </mat-card>
-</div>
+
+
+
+

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f5a623;
+  background-color: #fdcd4c;
   padding: 20px;
   height: 100vh;
   justify-content: center;
@@ -14,7 +14,7 @@
   align-items: center;
   flex-direction: column;
   padding: 20px;
-  background-color: #4a90e2;;
+  background-color:  #46cd6d !important;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -80,7 +80,7 @@ h2 {
 .number-pad button {
   font-size: 24px;
   padding: 20px;
-  background-color:#4a90e2;
+  background-color:  #46cd6d !important;
   border: 1px solid #ccc;
   cursor: pointer;
   border-radius: 8px;
@@ -88,5 +88,5 @@ h2 {
 }
 
 .number-pad button:hover {
-  background-color:  #357ab6;
+  background-color: #3bb45b !important;
 }

@@ -2,16 +2,8 @@
 
 .container {
   padding: 20px;
-
-}
-
-.tables-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 30px;
-  padding: 60px;
-
+  background-color: #fdcd4c;
+  border-radius: 20px;
 }
 
 .table {
@@ -24,23 +16,34 @@
 }
 
 .available {
-  background-color: #7d921c;/* Couleur pour les tables disponibles */
+  background-color:  #46cd6d !important;
   color: white;
 }
 
-.start-button {
-  margin-top: 20px;
-  color: white;
-  background-color: #4a90e2;;
+.next-button {
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: 90%;
+    border-radius: 10px;
+    height: 40px;
+  background-color:  #f05d35 !important;
 }
-.start-button:hover {
-  background-color: #357ab6;
+.next-button:hover {
+  background-color: #e0522e !important;
 }
 .custom-checkbox:checked {
-  background-color: #7d921c;
-  border-color: #7d921c;
+ background-color:  #46cd6d !important;
+  border-color:#46cd6d !important;
 }
 
 .form-check-label {
   margin-left: 10px; /* You can adjust the value as needed */
+}
+h1{
+  color: white;
 }
