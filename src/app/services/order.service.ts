@@ -15,9 +15,14 @@ export class OrderService {
   }
 
   validateOrder(commandId: number) {
-
     const body = { commandId };
     console.log('body', body);
     return this.http.post<any>('http://localhost:3003/validateOrder', body);
+  }
+
+  cancelOrder(commandId: number) {
+    const body = { commandId };
+    console.log('body', body);
+    return this.http.post<any>('http://localhost:3003/cancelOrder', body);
   }
 }
