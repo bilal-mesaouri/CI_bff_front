@@ -38,7 +38,8 @@ export class TableReservationComponent {
     private storeService: StoreService,
     private router: Router,
     private menuServiceService: MenuServiceService,
-    private snackBar: MatSnackBar // Snackbar for notifications
+    private snackBar: MatSnackBar, // Snackbar for notifications
+    private store: StoreService
   ) {}
 
   ngOnInit(): void {
@@ -91,6 +92,16 @@ export class TableReservationComponent {
         response => {
           console.log('Réponse du serveur:', response);
           localStorage.setItem('tableOrder', JSON.stringify(response));
+
+          this.store.setOrder(JSON.parse(<string>localStorage.getItem('tableOrder')));
+          this.store.setTable(this.store.getOrder().tables[this.store.getTableCompteur()]);
+          let cart ={
+            orderNumber: this.store.getOrder().commandId,
+            clientNumber: this.store.getClientNumber(),
+            tableNumber: this.store.getTable().tableNumber,
+            items: []
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
         },
         error => {
           console.error('Erreur:', error);  // Gérer l'erreur
