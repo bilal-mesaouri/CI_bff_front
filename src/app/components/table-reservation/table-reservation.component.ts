@@ -43,9 +43,10 @@ export class TableReservationComponent {
   ) {}
 
   ngOnInit(): void {
-    //this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
+
+    this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
     //pull le back stp pour avoir ça
-    this.http.get<Table[]>("http://localhost:3003/tables").subscribe({
+    //this.http.get<Table[]>("http://localhost:3003/tables").subscribe({
       next: (response: Table[]) => {
         this.tables = response;
         console.log(response);

@@ -5,9 +5,9 @@
     <p>Price : {{ item.price }} €</p>
     <p>Category : {{ item.category }}</p>
     <div class="quantity-controls">
-      <button (click)="decreaseQuantity(item)">−</button>
+      <button (click)="decreaseQuantity(item)" class="increase-button">−</button>
       <p class="quantity">Quantity: {{ item.quantity }}</p>
-      <button (click)="increaseQuantity(item)">+</button>
+      <button (click)="increaseQuantity(item)" class="increase-button">+</button>
     </div>
   </div>
 </div>

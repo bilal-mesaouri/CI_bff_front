@@ -10,10 +10,16 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: #f8f8f8;
+  background-color: #fdcd4c;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+.menu-item:hover{
+  transform: scale(1.05); /* Slight zoom-in effect on hover */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .item-image {
@@ -26,6 +32,7 @@
 .item-details {
   text-align: center;
   margin-top: 10px;
+  align-content: center;
 }
 
 .item-name {
@@ -43,4 +50,8 @@
 
 .quantity-controls button {
   padding: 5px 10px;
+}
+.increase-button{
+  border-radius: 1px;
+  border: none;
 }

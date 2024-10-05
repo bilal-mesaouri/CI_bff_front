@@ -10,11 +10,12 @@ import {HeaderComponent} from "../header/header.component";
 import {Cart} from "../../model/Cart";
 import { Router } from '@angular/router';
 import { StoreService } from '../../services/store.service';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, MenuItemComponent, CartComponent, HeaderComponent],
+  imports: [CommonModule, MenuItemComponent, CartComponent, HeaderComponent,MatSidenavModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })

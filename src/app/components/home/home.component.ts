@@ -23,5 +23,6 @@ export class HomeComponent {
   navigateToPayment() {
     this.router.navigate(['/orderId']);
   }
+  
 
 }

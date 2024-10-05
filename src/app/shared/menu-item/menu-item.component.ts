@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MenuItem } from '../../model/MenuItem';
 import { MenuComponent } from '../../components/menu/menu.component';
 
+
 @Component({
   selector: 'app-menu-item',
   standalone: true,

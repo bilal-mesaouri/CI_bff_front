@@ -4,6 +4,8 @@
   cursor: pointer;
   border-radius: 10px;
   overflow: hidden;
+  width: 200px;
+  height: 200px;
 }
 
 .category-card:hover {
@@ -16,13 +18,14 @@
 .image {
   height: 200px;
   object-fit: cover; /* Ensures the image maintains its aspect ratio */
-  border-bottom: 5px solid #fecd4c; /* Bootstrap primary color */
+  
 }
 
 /* Action card for the button */
 .action-card {
   padding: 20px;
-  background-color: #f8f9fa; /* Light background for the action section */
+  background-color: #FECD4CFF; /* Light background for the action section */
+
 }
 
 /* Fancy button */
