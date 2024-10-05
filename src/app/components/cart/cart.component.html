@@ -4,12 +4,22 @@
       <h2>Your Cart</h2>
       <div *ngFor="let item of cart">
         <p>{{ item.shortName }} -  Quantity:
-            <button (click)="decreaseQuantity(item)">−</button>
-            {{ item.quantity }}
-            <button (click)="increaseQuantity(item)">+</button>
+          <button (click)="decreaseQuantity(item)">−</button>
+          {{ item.quantity }}
+          <button (click)="increaseQuantity(item)">+</button>
         </p>
       </div>
       <p>Total: {{ getTotal() }} €</p>
       <button (click)="validateCart()">Validate Cart</button>
     </div>
   </div>
+
+
+  <div class="modal" *ngIf="orderValidated">
+  <div class="modal-content">
+        <h3>Order validated</h3>
+        <h3>Order Number:</h3>
+        <h2>{{orderId}}</h2>
+  </div>
+  </div>
+

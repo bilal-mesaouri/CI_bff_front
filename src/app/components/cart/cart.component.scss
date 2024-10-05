@@ -35,3 +35,14 @@
     text-decoration: none;
     cursor: pointer;
   }
+.finishOrder{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  background-color: white;
+}
+.finishContent{
+  padding: 3em;
+  text-align: center;
+}

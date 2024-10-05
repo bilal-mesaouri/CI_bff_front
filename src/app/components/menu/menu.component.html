@@ -1,4 +1,3 @@
-<!--<app-header></app-header>-->
 
 <mat-drawer-container class="example-container">
   <mat-drawer class="side-bar" mode="side" opened>
@@ -19,22 +18,6 @@
 
 </mat-drawer-container>
 
-
-<!--<div class="filter-buttons">
-  <button (click)="displayAllItems()">All</button>
-</div>-->
-
-
-<!--<div class="menu-container">
-  <div *ngFor="let item of items" class="menu-item">
-    <app-menu-item
-      [item]="item"
-      (quantityChanged)="handleQuantityChange($event)">
-    </app-menu-item>
-  </div>
-</div>-->
-
-
 <div class="cart" *ngIf="cart.items.length> 0" (click)="openPopup()">
   <h2>Your Cart</h2>
   <div class="cart-items">
@@ -51,3 +34,5 @@
   [isVisible]="isPopupVisible"
   (closePopupEvent)="closePopup()">
 </app-cart>
+
+

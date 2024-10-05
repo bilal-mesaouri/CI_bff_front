@@ -11,11 +11,12 @@ import {Cart} from "../../model/Cart";
 import { Router } from '@angular/router';
 import { StoreService } from '../../services/store.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, MenuItemComponent, CartComponent, HeaderComponent,MatSidenavModule],
+  imports: [CommonModule, MenuItemComponent, CartComponent, HeaderComponent,MatSidenavModule,MatCardModule,],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
@@ -134,7 +135,8 @@ export class MenuComponent implements OnInit{
         console.log('Order validated', data);
       });
       localStorage.clear();
-      this.router.navigate(['/']);
+      
+
     }else {
       this.store.incrementClient();
       this.router.navigate(['/table-categories']);
