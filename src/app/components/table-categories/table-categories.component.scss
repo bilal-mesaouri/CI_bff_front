@@ -8,7 +8,7 @@
 
 
 .category {
-  display: block;
+  display: flex;
   padding: 20px;
   background-color: #f05d36;
   border: 1px solid #ddd;
@@ -29,7 +29,7 @@
   margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
-  gap: 15px; 
+  gap: 15px;
 }
 
 @media (max-width: 768px) {

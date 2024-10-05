@@ -1,13 +1,11 @@
 <h4 class="title-center"> Table {{tableNumber()}}</h4>
 <h4 class="title-center"> P {{clientNumber()}}</h4>
 
-<div class="categories row justify-content-center">
-  <div class="col-md-4 col-sm-6 mb-4" *ngFor="let category of categories">
-    <app-category
+
+    <app-category *ngFor="let category of categories"
       [title]="category.title"
       [imageLink]="category.path"
-      class="category"
+      class="row category"
       (click)="displayItemsByType(category.title)">
     </app-category>
-  </div>
-</div>
+

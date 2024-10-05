@@ -4,6 +4,7 @@ import { MenuItemComponent } from '../../shared/menu-item/menu-item.component';
 import { MenuComponent } from '../menu/menu.component';
 import { StoreService } from '../../services/store.service';
 import { MatCardModule } from '@angular/material/card';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -20,7 +21,7 @@ export class CartComponent {
   orderValidated:boolean=false;
   orderId:any=this.store.getOrder().commandId;
 
-  constructor(public menuComponent:MenuComponent, private store:StoreService){}
+  constructor(public menuComponent:MenuComponent, private store:StoreService,private router: Router){}
 
   getTotal() {
     return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -53,5 +54,9 @@ export class CartComponent {
       this.menuComponent.updateCart(item)
     }
   }
+  navigateToHome() {
+    this.router.navigate(['/']);
+  }
+
 }
 
