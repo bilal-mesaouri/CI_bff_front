@@ -158,3 +158,13 @@ h3 {
 
 
 
+.homeButton{
+  display: flex;
+  justify-content: center;
+}
+
+
+.homeButton .btn {
+  background-color: #5cb85c ; /* Or use btn-warning for Bootstrap yellow */
+  color: white;
+}

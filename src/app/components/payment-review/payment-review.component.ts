@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';  // Ajout de HttpClient pour charger un fichier JSON depuis le serveur
 import { CommonModule, CurrencyPipe, isPlatformBrowser } from '@angular/common';
 import { take } from 'rxjs';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-payment-review',
   templateUrl: './payment-review.component.html',
@@ -21,11 +23,12 @@ export class PaymentReviewComponent {
   tableNumber: number | null = null;
   commandId: number | undefined;
   serverLink: string = 'http://localhost:3003/dining';
-
+  showHomeButton : boolean = false;
 
   constructor(
       private route: ActivatedRoute,
       private httpClient: HttpClient,
+      private router: Router
   ) {
 
   }
@@ -92,6 +95,7 @@ export class PaymentReviewComponent {
       next:()=>{
         console.log("paid")
         this.ngOnInit();
+        this.showHomeButton = true ;
       },
       error:()=>{
 
@@ -131,5 +135,8 @@ export class PaymentReviewComponent {
       return 'selected';  // Bleu si sélectionné
     }
     return 'default';  // Gris par défaut
+  }
+  takeMeHome(){
+    this.router.navigate(['/home']);
   }
 }
