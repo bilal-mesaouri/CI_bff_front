@@ -10,6 +10,7 @@ import { ReservationState } from '../table-reservation/reservation.reducer';
 import { error } from 'node:console';
 import { ClientRequest } from 'node:http';
 import { Router } from '@angular/router';
+
 @Component({
   standalone: true,
   selector: 'app-payment-method',
@@ -48,6 +49,7 @@ export class PaymentMethodComponent implements OnInit{
 
   ngOnInit(): void {
     // Get commandId from route parameters
+    this.store.dispatch(clearSelectedTables());
     console.log("##### ON INIT");
     this.route.params.pipe(take(1)).subscribe(params => {
       this.commandId = parseInt(params['commandId']);
