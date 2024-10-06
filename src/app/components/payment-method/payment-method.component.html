@@ -60,9 +60,19 @@
     
     <button class="btn btn-success" (click)="processPayment()">Pay Now</button>
   </div>
+  <div *ngIf="tablesPaid" class="container my-4">
+    <h1 class="text-success">
+      <i class="bi bi-check-circle-fill"></i> Selected Tables Paid Successfully
+    </h1>
+    <button type="button" class="btn btn-success pull-right" (click)="GoHome()">
+      <i class="bi bi-house-fill"></i> Home
+    </button>
+  </div>
+  
+  
+  </div>
 
 
-</div>
 <div *ngIf="!tables.length" class="container my-4" style="height: 100vh;" >
   <h1>
     Command not found

@@ -35,6 +35,8 @@ export class PaymentMethodComponent implements OnInit{
   showAlert = false;
   alertMessage :string = "";
 
+  tablesPaid: boolean = false ;
+
 
 
   constructor(private route: ActivatedRoute, private httpClient: HttpClient,    private store: Store<{ reservation: ReservationState }>,
@@ -137,6 +139,7 @@ export class PaymentMethodComponent implements OnInit{
             this.selectedTable = null ;
             this.payAll = false ;
             this.ngOnInit();
+            this.tablesPaid = true ;
           },
           error: (error) => this.logError(error)
         });
