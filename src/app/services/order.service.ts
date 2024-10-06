@@ -25,4 +25,9 @@ export class OrderService {
     console.log('body', body);
     return this.http.post<any>('http://localhost:3003/cancelOrder', body);
   }
+
+
+  getCilentOrders(commandId: number, clientId: number, tableId: number) {
+    return this.http.get<any>(`http://localhost:3003/orders/${commandId}/${clientId}/${tableId}`);
+  }
 }

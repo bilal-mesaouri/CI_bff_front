@@ -18,6 +18,10 @@
 
 </mat-drawer-container>
 
+
+<button *ngIf=" getClientNumber() !=1" class="copyButton" (click)="openCopyModal()" >
+  Copy the order
+</button>
 <div class="cart" *ngIf="cart.items.length> 0" (click)="openPopup()">
   <h2>Your Cart</h2>
   <div class="cart-items">
@@ -36,3 +40,29 @@
 </app-cart>
 
 
+<div class="modal" *ngIf="isCopyModalVisible">
+  <div class="modal-content">
+    <span class="close" (click)="closeCopyModal()">&times;</span>
+    <h2>Copy the order</h2>
+    <div class="copy-container">
+      <div *ngFor="let client of othersOrders" class="client">
+        <button (click)="getdetails(client)">Client {{ client.client }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" *ngIf="isDetailModalVisible">
+  <div class="modal-content">
+<!--    <span class="close" (click)="closeDetailModal()">&times;</span>-->
+    <h2>Details for Client P{{ selectedClient.client}}</h2>
+    <div class="details-container">
+      <ul>
+        <li *ngFor="let item of selectedClient.items"> {{ item.shortName }} - {{ item.quantity }}</li>
+      </ul>
+      <p>Total: {{ calculateTotal(selectedClient.items) }}€</p>
+      <button (click)="copyOrder()">Copy Order</button>
+      <button (click)="closeDetailModal()">Back</button>
+    </div>
+  </div>
+</div>

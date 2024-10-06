@@ -29,6 +29,10 @@ export class MenuComponent implements OnInit{
     items:[]
   };
   isPopupVisible: boolean = false;
+  isCopyModalVisible: boolean = false;
+  isDetailModalVisible: boolean = false;
+  othersOrders: any[] = [];
+  selectedClient: any = {};
 
   constructor(  public menuServiceService: MenuServiceService, public orderServiceService: OrderService,
                 private router: Router, private store:StoreService ) {}
@@ -135,7 +139,7 @@ export class MenuComponent implements OnInit{
         console.log('Order validated', data);
       });
       localStorage.clear();
-      
+
 
     }else {
       this.store.incrementClient();
@@ -152,7 +156,6 @@ export class MenuComponent implements OnInit{
     return total;
   }
 
-
   openPopup() {
     this.isPopupVisible = true;
   }
@@ -162,4 +165,57 @@ export class MenuComponent implements OnInit{
     this.isPopupVisible = false;
   }
 
+  getClientNumber(): number {
+    return this.store.getClientNumber();
+  }
+
+  gettableNumber(): number {
+    return this.store.getTable().tableNumber;
+  }
+
+  getorderNumber(): number {
+    return this.store.getOrder().commandId;
+  }
+
+  openCopyModal() {
+    this.isCopyModalVisible = true;
+    this.getOthersOrder();
+  }
+
+  closeCopyModal() {
+    this.isCopyModalVisible = false;
+  }
+
+  getOthersOrder() : any{
+    this.orderServiceService.getCilentOrders(this.getorderNumber(),this.getClientNumber(),this.gettableNumber()).subscribe((data: any) => {
+      console.log('data is here ',data)
+      console.log(data.length)
+      if (data.length > 0) {
+      
+        this.othersOrders = data;
+      }
+      console.log('Orders fetched', this.othersOrders);
+    });
+  }
+
+  getdetails(client: any) {
+    this.selectedClient = client;
+    this.isCopyModalVisible = false;
+    this.isDetailModalVisible = true;
+  }
+
+  calculateTotal(items: any[]) {
+    return items.reduce((total, item) => total + item.quantity * item.price, 0);
+  }
+
+  copyOrder() {
+    this.cart.items = this.selectedClient.items;
+    this.updateLocalStorage();
+    this.isDetailModalVisible = false;
+  }
+
+  closeDetailModal() {
+    this.isDetailModalVisible = false;
+    this.isCopyModalVisible = true;
+  }
 }
