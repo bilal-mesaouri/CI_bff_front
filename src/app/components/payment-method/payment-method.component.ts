@@ -26,12 +26,12 @@ export class PaymentMethodComponent implements OnInit{
   tables:Array<any>=[];
   payTablesBill:Array<any>=[];
   tablesTotal:number=0;
-  
+
   payAll: boolean = false;
-  
+
   serverLink: string = 'http://localhost:3003/dining';
-  
-  
+
+
   showAlert = false;
   alertMessage :string = "";
 
@@ -65,9 +65,9 @@ export class PaymentMethodComponent implements OnInit{
       }
     });
   }
-  
 
-  
+
+
   selectTable(table: number, tablePaid: boolean) {
     if(tablePaid)
       this.triggerAlert("table already paid");
@@ -99,13 +99,12 @@ export class PaymentMethodComponent implements OnInit{
 
   choosePaymentMethod() {
     //send to other screen with different values
-    console.log("navigqting",this.selectedTable);
     this.router.navigate([`/payment-review`, this.commandId, this.selectedTable]);
   }
 
   calculateTotal(selectedTables:number[]): number {
     this.httpClient.post(this.serverLink+"/payment/byTable",{
-      "commandId":1234,
+      "commandId":this.commandId,
       "selectedTables":selectedTables
     }
   ).pipe(take(1))
@@ -124,7 +123,7 @@ export class PaymentMethodComponent implements OnInit{
   }
   processPayment() {
     console.log('Processing payment for the entire table... ',this.commandId);
-    
+
     this.selectedTables$.pipe(take(1)).subscribe({
       next: (selectedTables) => {
         console.log('Selected Tables:', selectedTables);
@@ -145,14 +144,13 @@ export class PaymentMethodComponent implements OnInit{
       error: (error) => this.logError(error)
     });
   }
-  
+
 
 
 
   triggerAlert(alertMessage: string) {
     this.alertMessage = alertMessage ;
     this.showAlert = true;
-    // Auto-close after 5 seconds (5000ms)
     setTimeout(() => {
       this.closeAlert();
     }, 5000);
