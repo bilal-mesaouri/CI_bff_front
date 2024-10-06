@@ -14,7 +14,6 @@ export class MenuServiceService {
   createTableOrder(tablesNumber: number[], customersCount: number): Observable<any> {
     const body = { tablesNumber, customersCount };
     console.log(body);
-    // Envoyer la requête POST avec HttpClient
     return this.http.post<any>(this.apiUrl, body);
   }
 

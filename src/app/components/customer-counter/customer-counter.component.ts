@@ -29,7 +29,7 @@ export class CustomerCounterComponent {
     this.count = (parseInt(this.count) + 1).toString();
   }
   ngOnInit(): void {
-    this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
+    this.http.get<Table[]>("http://localhost:3003/tables").subscribe({
       next: (response: Table[]) => {
         this.tables = response;
         console.log(response);
