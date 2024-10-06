@@ -33,6 +33,7 @@ export class MenuComponent implements OnInit{
   isDetailModalVisible: boolean = false;
   othersOrders: any[] = [];
   selectedClient: any = {};
+  orderValidated:boolean=false;
 
   constructor(  public menuServiceService: MenuServiceService, public orderServiceService: OrderService,
                 private router: Router, private store:StoreService ) {}
@@ -139,8 +140,7 @@ export class MenuComponent implements OnInit{
         console.log('Order validated', data);
       });
       localStorage.clear();
-
-
+      this.orderValidated=true;
     }else {
       this.store.incrementClient();
       this.router.navigate(['/table-categories']);
@@ -191,7 +191,7 @@ export class MenuComponent implements OnInit{
       console.log('data is here ',data)
       console.log(data.length)
       if (data.length > 0) {
-      
+
         this.othersOrders = data;
       }
       console.log('Orders fetched', this.othersOrders);
@@ -218,4 +218,10 @@ export class MenuComponent implements OnInit{
     this.isDetailModalVisible = false;
     this.isCopyModalVisible = true;
   }
+
+  navigateToHome() {
+    this.router.navigate(['/']);
+  }
+
+
 }

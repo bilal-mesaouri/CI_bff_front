@@ -18,9 +18,6 @@ export class CartComponent {
   @Input() isVisible: boolean = false;
   @Output() closePopupEvent = new EventEmitter<void>();
 
-  orderValidated:boolean=false;
-  orderId:any=this.store.getOrder().commandId;
-
   constructor(public menuComponent:MenuComponent, private store:StoreService,private router: Router){}
 
   getTotal() {
@@ -36,10 +33,7 @@ export class CartComponent {
 
   validateCart() {
     this.menuComponent.validateCart();
-    //localStorage.clear();
     this.closePopup();
-    this.orderValidated=true;
-
   }
 
   increaseQuantity(item: any) {
