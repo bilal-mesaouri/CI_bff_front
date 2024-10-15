@@ -1,0 +1,63 @@
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px; /* Hauteur de la barre en haut */
+  z-index: 20; /* Toujours au-dessus des autres éléments */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.top-left, .top-right, .bottom-left, .bottom-right {
+  background-size: cover;
+  position: absolute;
+  width: 50%;
+  height: 47.5%;
+  border: 2px solid black; /* Bordure noire */
+}
+
+.top-left {
+  top: 50px; /* Juste en dessous de la barre supérieure */
+  left: 0;
+}
+
+.top-right {
+  top: 50px;
+  right: 0;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+}
+
+/* Section centrale superposée */
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45%;
+  height: 45%;
+  z-index: 10; /* Supérieur aux sections latérales, mais inférieur à la barre */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black; /* Bordure noire pour le centre */
+}
+

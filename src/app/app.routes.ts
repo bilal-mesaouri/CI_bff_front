@@ -10,6 +10,9 @@ import { TableCategoriesComponent } from './components/table-categories/table-ca
 import { PaymentReviewComponent } from './components/payment-review/payment-review.component';
 import {CustomerCounterComponent} from './components/customer-counter/customer-counter.component';
 
+// Define the routes of the table
+import { HomeTableComponent} from "./table/home-table/home-table.component";
+
 export const routes: Routes = [
     { path: '', component: HomeComponent},
     { path: 'table-reservation', component: TableReservationComponent, data:{type:"reservation"}},
@@ -28,7 +31,8 @@ export const routes: Routes = [
   { path: 'menu/starters', component: MenuComponent},
   { path: 'menu/desserts', component: MenuComponent},
   { path: 'menu/drinks', component: MenuComponent},
-  { path: 'menu/main course', component: MenuComponent}
+  { path: 'menu/main course', component: MenuComponent},
+  { path: 'table-home', component: HomeTableComponent},
 
 
 ];
