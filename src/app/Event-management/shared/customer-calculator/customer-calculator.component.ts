@@ -18,14 +18,14 @@ import { Table } from '../../../model/model';
 export class CustomerCalculatorComponent {
 
   count: string = '0';
-  type:string = "";
+  type:string = "customerCount";
   serverLink: string = "http://localhost:9500/";
   tables: Table[] = [] as Table[];
   countEmptyTables:number=0;
   requiredNumberOfTables:number=0;
   constructor(private router: Router, private storeService: StoreService, private route: ActivatedRoute,private http: HttpClient,private snackBar: MatSnackBar) {
     this.route.data.subscribe(data => {
-      this.type = data['type'];
+      //this.type = data['type'];
     });
   }
 
