@@ -6,9 +6,27 @@ body {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .rotate-button{
-  bottom: 0px;
-  right: 0%;
+  bottom: 5px;
+  right: 5px;
   position: fixed;
-  background-color:  white !important;
+  border: none;
+  background-color: #fdcd4c;
+
+}
+mat-grid-tile {
+  background: white;
+}
+
+.overlay-card {
+  position: absolute; /* Allow for absolute positioning */
+  top: 50%; /* Position it vertically in the center */
+  left: 50%; /* Position it horizontally in the center */
+  transform: translate(-50%, -50%); /* Offset the card back by half its dimensions */
+  z-index: 10; /* Ensure it is above the grid */
+  width: 500px;
+  height: 500px;
+  transition: transform 0.5s; /* Smooth rotation transition */
+  background-color: #fdcd4c;
+  border-radius: 10px;
   border: none;
 }

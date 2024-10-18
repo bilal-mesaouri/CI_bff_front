@@ -1,6 +1,3 @@
-mat-grid-tile {
-  background: lightblue;
-}
 
 .overlay-card {
   position: absolute; /* Allow for absolute positioning */
@@ -11,7 +8,9 @@ mat-grid-tile {
   width: 500px;
   height: 500px;
   transition: transform 0.5s; /* Smooth rotation transition */
-  background-color: white;
+  background-color: #fdcd4c;
+border: none;
+  border-radius: 20px;
 }
 .order {
   background-color:  #f05d35 !important;
