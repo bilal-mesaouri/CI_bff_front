@@ -11,6 +11,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Evenement } from '../../../model/event';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-event-form',
@@ -36,29 +37,35 @@ export class EventFormComponent {
   event:Evenement={} as Evenement;
   private apiUrl = 'http://localhost:3003/addEvent';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router,private snackBar: MatSnackBar) {}
 
   navigateToReservation() {
     this.addEvent();
   }
 
   addEvent() {
-    this.event.name = this.eventName; // Set the event name
-    this.event.date = this.formatDateToString(this.eventDate); // Set the formatted date
+    if(!this.eventName || !this.eventDate){
+      this.openSnackBar("All fields are required!");
+    }
+    else{
+      this.event.name = this.eventName; // Set the event name
+      this.event.date = this.formatDateToString(this.eventDate); // Set the formatted date
 
-    // Make an HTTP POST request to add the event
-    this.http.post(this.apiUrl, { event: this.event }).subscribe(
-      (response) => {
-        console.log('Event added successfully:', response);
-        this.router.navigate(['/event-customer-count']);
-      },
-      (error) => {
-        console.error('Error adding event:', error);
+      // Make an HTTP POST request to add the event
+      this.http.post(this.apiUrl, { event: this.event }).subscribe(
+        (response) => {
+          console.log('Event added successfully:', response);
+          this.router.navigate(['/event-customer-count']);
+        },
+        (error) => {
+          console.error('Error adding event:', error);
 
-      }
-    );
+        }
+      );
+    }
+
   }
-  
+
   rotateCard() {
     this.rotation += 90; // Increase rotation angle by 90 degrees
     if (this.rotation >= 360) {
@@ -72,4 +79,11 @@ export class EventFormComponent {
      const year: string = String(date.getFullYear()); // Obtenir l'année
      return `${day}/${month}/${year}`;
    }
+  openSnackBar(message: string, action: string = 'Close') {
+    this.snackBar.open(message, action, {
+      duration: 3000, // Duration in milliseconds
+      horizontalPosition: 'center', // Can be 'start', 'center', 'end', 'left', or 'right'
+      verticalPosition: 'top', // Can be 'top' or 'bottom'
+    });
+  }
 }
