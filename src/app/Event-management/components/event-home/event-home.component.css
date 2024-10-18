@@ -1,0 +1,30 @@
+mat-grid-tile {
+  background: lightblue;
+}
+
+.overlay-card {
+  position: absolute; /* Allow for absolute positioning */
+  top: 50%; /* Position it vertically in the center */
+  left: 50%; /* Position it horizontally in the center */
+  transform: translate(-50%, -50%); /* Offset the card back by half its dimensions */
+  z-index: 10; /* Ensure it is above the grid */
+  width: 500px;
+  height: 500px;
+  transition: transform 0.5s; /* Smooth rotation transition */
+  background-color: white;
+}
+.order {
+  background-color:  #f05d35 !important;
+  bottom: 50%; /* Distance from the bottom of the page */
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  width: 90%;
+  border-radius: 10px;
+  height: 40px;
+}

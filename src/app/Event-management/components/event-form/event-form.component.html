@@ -1,0 +1,33 @@
+<div style="position: relative;">
+  <mat-card>
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile>1</mat-grid-tile>
+      <mat-grid-tile>2</mat-grid-tile>
+      <mat-grid-tile>3</mat-grid-tile>
+      <mat-grid-tile>4</mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
+  <!-- Overlay Card -->
+  <mat-card class="overlay-card" [ngStyle]="{'transform': 'translate(-50%, -50%) rotate(' + rotation + 'deg)'}">
+
+    <mat-card-content>
+      <form class="form">
+        <mat-form-field class="form-field" >
+          <mat-label>Event name</mat-label>
+          <input matInput [(ngModel)]="eventName" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker"  [(ngModel)]="eventDate" [ngModelOptions]="{standalone: true}">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button mat-flat-button class="order" (click)="navigateToReservation()">Next</button>
+
+      </form>
+    </mat-card-content>
+      <button mat-raised-button (click)="rotateCard()" class="rotate-button">
+        <mat-icon>cached</mat-icon></button>
+  </mat-card>
+</div>

@@ -1,0 +1,20 @@
+<div style="position: relative;">
+  <mat-card>
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile>1</mat-grid-tile>
+      <mat-grid-tile>2</mat-grid-tile>
+      <mat-grid-tile>3</mat-grid-tile>
+      <mat-grid-tile>4</mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
+
+  <!-- Overlay Card -->
+  <mat-card class="overlay-card" [ngStyle]="{'transform': 'translate(-50%, -50%) rotate(' + rotation + 'deg)'}">
+
+    <mat-card-content >
+      <app-table-reserve>
+
+    </app-table-reserve>
+    </mat-card-content>
+    <button mat-raised-button (click)="rotateCard()" class="rotate-button"><mat-icon>cached</mat-icon></button>  </mat-card>
+</div>

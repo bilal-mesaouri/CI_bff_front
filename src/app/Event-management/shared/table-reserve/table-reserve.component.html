@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="m-2 col-12 text-center">
+    <h1>You can select up to {{ numberOfTables }} tables</h1>
+  </div>
+  <div class="row">
+    <div class="col-3" *ngFor="let table of tables">
+      <mat-card
+        class="table"
+        [ngClass]="{'taken': table.taken || table.selected, 'available': !table.taken && !table.selected}"
+        (click)="toggleSelection(table)"
+      >
+        <mat-card-header class="d-flex justify-content-center">
+          <mat-card-title
+            [ngClass]="{'taken': table.taken || table.selected, 'available': !table.taken && !table.selected}"
+            class="text-center"
+          >
+            {{ table.number }}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="p-0">
+          <div class="d-flex justify-content-center align-items-center">
+            <input
+              class="form-check-input custom-checkbox mb-2"
+              type="checkbox"
+              id="customCheckbox"
+              [(ngModel)]="table.selected"
+              [disabled]="table.taken || (selectedCount >= numberOfTables && !table.selected)"
+            />
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <button mat-flat-button class="next-button" [disabled]="selectedCount !== numberOfTables" (click)="navigateToNextPage()">
+    Next
+  </button>
+</div>
