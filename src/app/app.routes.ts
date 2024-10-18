@@ -14,6 +14,9 @@ import { EventFormComponent } from './Event-management/components/event-form/eve
 import { EventCustomerCountComponent } from './Event-management/components/event-customer-count/event-customer-count.component';
 import { TableReservationEventComponent } from './Event-management/components/table-reservation-event/table-reservation-event.component';
 
+// Define the routes of the table
+import { HomeTableComponent} from "./table/home-table/home-table.component";
+
 export const routes: Routes = [
   { path: '', component: EventHomeComponent},
   { path: 'event-form', component: EventFormComponent},
@@ -36,7 +39,8 @@ export const routes: Routes = [
   { path: 'menu/starters', component: MenuComponent},
   { path: 'menu/desserts', component: MenuComponent},
   { path: 'menu/drinks', component: MenuComponent},
-  { path: 'menu/main course', component: MenuComponent}
+  { path: 'menu/main course', component: MenuComponent},
+  { path: 'table-home', component: HomeTableComponent},
 
 
 ];
