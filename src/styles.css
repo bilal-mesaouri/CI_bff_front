@@ -5,3 +5,10 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.rotate-button{
+  bottom: 0px;
+  right: 0%;
+  position: fixed;
+  background-color:  white !important;
+  border: none;
+}

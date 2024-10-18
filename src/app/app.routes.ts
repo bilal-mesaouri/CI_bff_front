@@ -9,22 +9,30 @@ import { CategoryComponent } from './components/category/category.component';
 import { TableCategoriesComponent } from './components/table-categories/table-categories.component';
 import { PaymentReviewComponent } from './components/payment-review/payment-review.component';
 import {CustomerCounterComponent} from './components/customer-counter/customer-counter.component';
+import { EventHomeComponent } from './Event-management/components/event-home/event-home.component';
+import { EventFormComponent } from './Event-management/components/event-form/event-form.component';
+import { EventCustomerCountComponent } from './Event-management/components/event-customer-count/event-customer-count.component';
+import { TableReservationEventComponent } from './Event-management/components/table-reservation-event/table-reservation-event.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent},
-    { path: 'table-reservation', component: TableReservationComponent, data:{type:"reservation"}},
-    { path: 'table-payment', component: TableReservationComponent, data:{type:"payment"} },
-    { path: 'table-categories',component: TableCategoriesComponent },
-    { path: 'menu', component: MenuComponent},
-    { path: 'table-reservation', component: TableReservationComponent },
-    { path: 'header', component: HeaderComponent },
-    { path: 'category', component: CategoryComponent },
-    { path: 'payment-method/:commandId', component: PaymentMethodComponent },
-    { path: 'payment-review/:orderId/:tableNumber', component: PaymentReviewComponent },
-    { path: 'customer-count', component: CustomerCountComponent, data:{type:"customerCount"} },
-    { path: 'orderId', component: CustomerCountComponent, data:{type:"orderId"} },
-    { path: 'table-reservation', component: TableReservationComponent },
-    { path: 'customer-counter', component: CustomerCounterComponent},
+  { path: '', component: EventHomeComponent},
+  { path: 'event-form', component: EventFormComponent},
+  { path: 'event-customer-count', component: EventCustomerCountComponent},
+  { path: 'event-table-reservation', component: TableReservationEventComponent},
+
+  { path: 'table-reservation', component: TableReservationComponent, data:{type:"reservation"}},
+  { path: 'table-payment', component: TableReservationComponent, data:{type:"payment"} },
+  { path: 'table-categories',component: TableCategoriesComponent },
+  { path: 'menu', component: MenuComponent},
+  { path: 'table-reservation', component: TableReservationComponent },
+  { path: 'header', component: HeaderComponent },
+  { path: 'category', component: CategoryComponent },
+  { path: 'payment-method/:commandId', component: PaymentMethodComponent },
+  { path: 'payment-review/:orderId/:tableNumber', component: PaymentReviewComponent },
+  { path: 'customer-count', component: CustomerCountComponent, data:{type:"customerCount"} },
+  { path: 'orderId', component: CustomerCountComponent, data:{type:"orderId"} },
+  { path: 'table-reservation', component: TableReservationComponent },
+  { path: 'customer-counter', component: CustomerCounterComponent},
   { path: 'menu/starters', component: MenuComponent},
   { path: 'menu/desserts', component: MenuComponent},
   { path: 'menu/drinks', component: MenuComponent},
