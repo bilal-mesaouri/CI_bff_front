@@ -9,6 +9,7 @@ export class StoreService {
   private order: any;
   private table: any;
   private clientsNumber: number = 1;
+  private menuName: string = '';
 
   constructor() { }
   // Setter method to update the number of people
@@ -69,5 +70,13 @@ export class StoreService {
     if (this.tablecompteur >= this.order.tables.length) {
       this.tablecompteur = 0;
     }
+  }
+
+  setMenuName(menuName: string) {
+    this.menuName = menuName;
+  }
+
+  getMenuName() {
+    return this.menuName;
   }
 }

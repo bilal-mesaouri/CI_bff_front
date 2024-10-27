@@ -1,0 +1,10 @@
+<div class="categories row justify-content-center">
+  <div class="col-md-6 col-sm-6 mb-4" *ngFor="let category of categories">
+    <app-category
+      [title]="category.title"
+      [imageLink]="category.path"
+      class="category"
+      (click)="displayItemsByType(category.title)">
+    </app-category>
+  </div>
+</div>

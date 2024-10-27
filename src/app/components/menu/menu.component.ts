@@ -35,6 +35,7 @@ export class MenuComponent implements OnInit{
   selectedClient: any = {};
   orderValidated:boolean=false;
 
+
   constructor(  public menuServiceService: MenuServiceService, public orderServiceService: OrderService,
                 private router: Router, private store:StoreService ) {}
 

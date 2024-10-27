@@ -1,0 +1,8 @@
+<mat-card class="overlay-card" [ngStyle]="{'transform': 'translate(-50%, -50%) rotate(' + rotation + 'deg)'}">
+
+  <mat-card-content>
+    <ng-content></ng-content>
+  </mat-card-content>
+  <button mat-raised-button (click)="rotateCard()" class="rotate-button">
+    <mat-icon>cached</mat-icon></button>
+</mat-card>

@@ -1,0 +1,8 @@
+
+  <app-category *ngFor="let category of categories"
+                [title]="category.title"
+                [imageLink]="category.path"
+                class="category"
+                (click)="displayItemsByType(category.title)">
+  </app-category>
+

@@ -1,0 +1,47 @@
+<div class="modal" *ngIf="isVisible" (click)="closePopup($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closePopup()">&times;</span>
+    <div *ngIf="!isDrinks">
+    <h2>Your Cart</h2>
+      <div *ngIf="cart.STARTER">
+        <h3>Starter</h3>
+        <app-menu-item
+          [item]="cart.STARTER">
+        </app-menu-item>
+      </div>
+
+      <div *ngIf="cart.MAIN">
+        <h3>Main</h3>
+        <app-menu-item
+          [item]="cart.MAIN">
+        </app-menu-item>
+      </div>
+
+      <div *ngIf="cart.DESSERT">
+        <h3>Dessert</h3>
+        <app-menu-item
+          [item]="cart.DESSERT">
+        </app-menu-item>
+      </div>
+
+      <div *ngIf="cart.BEVERAGES && cart.BEVERAGES.length > 0">
+        <h3>Beverages</h3>
+        <div *ngFor="let beverage of cart.BEVERAGES">
+          <p>{{ beverage.shortName }}</p>
+        </div>
+      </div>
+
+      <p>Total: {{ getTotal() }} €</p>
+    </div>
+    <div *ngIf="isDrinks">
+      <h2>Your Cart</h2>
+      <div *ngFor="let item of cart" class="cart-item">
+        display2(item)
+        <app-menu-item
+          [item]="item">
+        </app-menu-item>
+      </div>
+    </div>
+<!--    <button (click)="validateCart()">Validate Cart</button>-->
+  </div>
+</div>

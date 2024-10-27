@@ -1,0 +1,51 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer class="side-bar" mode="side" opened>
+    <app-header></app-header>
+  </mat-drawer>
+  <mat-drawer-content class="side-bar-content">
+    <div class="menu-container">
+      <div class="row">
+        <div *ngFor="let item of items" class="col-6 col-sm-4 col-md-3 mb-0">
+          <app-menu-item
+            [item]="item"
+            (click)="addItem(item, item.category)">
+          </app-menu-item>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+
+</mat-drawer-container>
+
+<div class="cart" *ngIf="!isEmptyCart()" (click)="openPopup()">
+  <h2>Your Cart</h2>
+  <div class="cart-items">
+    <h2>Your Cart</h2>
+    <div *ngIf="cart.items.STARTER">
+      <p>Starter : {{ cart.items.STARTER.shortName }}</p>
+    </div>
+
+    <div *ngIf="cart.items.MAIN">
+      <p>Main : {{ cart.items.MAIN.shortName }}</p>
+    </div>
+
+    <div *ngIf="cart.items.DESSERT">
+      <p>Dessert: {{ cart.items.DESSERT.shortName }}</p>
+    </div>
+
+    <div *ngIf="cart.items.BEVERAGES && cart.items.BEVERAGES.length > 0">
+      <h3>Beverages</h3>
+      <div *ngFor="let beverage of cart.items.BEVERAGES">
+        <p>{{ beverage.shortName }}</p>
+      </div>
+    </div>
+    <p>Total: {{ getTotalPrice() }} €</p>
+    </div>
+  <button (click)="validateMenu()">Validate Menu</button>
+</div>
+
+<app-event-cart
+  [cart]="cart.items"
+  [isVisible]="isPopupVisible"
+  (closePopupEvent)="closePopup()">
+</app-event-cart>

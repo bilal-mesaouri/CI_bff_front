@@ -1,0 +1,18 @@
+.category{
+  width: 10%;
+  height: 10%;
+  align-self: center;
+  margin: 20px;
+}
+mat-toolbar{
+  /*  display: flex;
+  justify-content: space-between;
+   align-items: flex-start;
+    height: 6em;*/
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  // padding: 10px;
+  height: auto;
+}
+
