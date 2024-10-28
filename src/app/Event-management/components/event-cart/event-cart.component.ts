@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
 import {MenuItemComponent} from "../menu-item/menu-item.component";
+import {CreateEventService} from "../../../services/create-event.service";
 
 @Component({
   selector: 'app-event-cart',
@@ -20,6 +21,8 @@ export class EventCartComponent {
   @Output() closePopupEvent = new EventEmitter<void>();
   @Output() itemRemoved = new EventEmitter<any>();
 
+  constructor(private createEventService: CreateEventService) {
+  }
   closePopup(event?: Event) {
 
     if (event) {
@@ -39,4 +42,12 @@ export class EventCartComponent {
     console.log(' hi:', hi);
   }
 
+  removeItem(item: any) {
+    this.createEventService.removeItem(item).subscribe({
+      next: (data) => {
+        console.log('item removed:', data);
+        this.itemRemoved.emit(item);
+      }
+    });
+  }
 }

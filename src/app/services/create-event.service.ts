@@ -20,5 +20,15 @@ export class CreateEventService {
   removeMenu(menuToRemove: any) {
     return this.http.delete('http://localhost:3003/event/menu/' + menuToRemove.name);
   }
+
+  removeItem(item: any) {
+    console.log('Delete item:', item._id);
+    return this.http.delete('http://localhost:3003/event/drink/' + item._id);
+  }
+
+  validate() {
+    console.log('menusData:');
+    return this.http.get('http://localhost:3003/event/validate');
+  }
 }
 

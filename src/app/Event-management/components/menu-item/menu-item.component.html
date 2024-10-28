@@ -5,4 +5,7 @@
     <p>Price : {{ item.price }} €</p>
     <p>Category : {{ item.category }}</p>
   </div>
+  <div *ngIf="isDrinksVisible">
+  <button (click)="onDelete(item)">Delete</button>
+  </div>
 </div>

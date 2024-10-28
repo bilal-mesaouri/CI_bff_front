@@ -36,9 +36,9 @@
     <div *ngIf="isDrinks">
       <h2>Your Cart</h2>
       <div *ngFor="let item of cart" class="cart-item">
-        display2(item)
         <app-menu-item
-          [item]="item">
+          [item]="item"
+          [isDrinksVisible]="true">
         </app-menu-item>
       </div>
     </div>

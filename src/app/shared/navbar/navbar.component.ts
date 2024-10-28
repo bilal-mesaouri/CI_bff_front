@@ -20,10 +20,7 @@ export class NavbarComponent {
   }
 
   cancel() {
-    console.log('Cancelling order');
-    console.log('Order', localStorage.getItem('tableOrder'));
     const orderNumber = JSON.parse(<string>localStorage.getItem('tableOrder')).commandId;
-    console.log('Order number', orderNumber);
     if (!orderNumber) {
       return;
     }

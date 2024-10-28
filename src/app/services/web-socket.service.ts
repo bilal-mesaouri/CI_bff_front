@@ -16,7 +16,6 @@ export class WebSocketService {
     this.socket.onmessage = (event) => {
       this.ngZone.run(() => {
         const messageData = JSON.parse(event.data); // Parser le message reçu
-        console.log('Message parsé:', messageData);
         this.fileChangeSubject.next(messageData.data); // Émettre les données mises à jour
       });
     };

@@ -58,7 +58,6 @@ export class CommunEventCartComponent implements OnInit, OnDestroy{
       DESSERT: menu.items.DESSERT,
       BEVERAGES: menu.BEVERAGES
     }
-    console.log('cart:', cart);
     return cart;
   }
 
@@ -67,7 +66,6 @@ export class CommunEventCartComponent implements OnInit, OnDestroy{
   }
 
   getDrinks() {
-    console.log('this.menusData.BEVERAGES:', this.menusData.BEVERAGES);
     return this.menusData.BEVERAGES;
   }
 
@@ -82,5 +80,13 @@ export class CommunEventCartComponent implements OnInit, OnDestroy{
 
   closeDrinks() {
     this.isDrinksVisible = false;
+  }
+
+  validateMenus() {
+    this.createEventService.validate().subscribe({
+      next: (data) => {
+        console.log('Menu créé:', data);
+      }
+    });
   }
 }

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem2 } from '../../../model/MenuItem2';
+import { CreateEventService } from '../../../services/create-event.service';
 
 
 @Component({
@@ -13,8 +14,19 @@ import { MenuItem2 } from '../../../model/MenuItem2';
 export class MenuItemComponent implements OnInit {
   @Input() item!: MenuItem2;
   @Output() itemClicked = new EventEmitter<MenuItem2>();
+  @Output() deleteItem = new EventEmitter<void>();
+  @Input() isDrinksVisible: boolean = false;
 
-  constructor() {
+  constructor(public createEventService: CreateEventService) { }
+
+  onDelete(item: any) {
+      this.createEventService.removeItem(item).subscribe({
+        next: (data) => {
+          console.log('item removed:', data);
+          this.deleteItem.emit(item);
+        }
+      });
+
   }
 
   ngOnInit() {
