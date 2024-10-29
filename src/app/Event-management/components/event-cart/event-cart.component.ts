@@ -19,7 +19,7 @@ export class EventCartComponent {
   @Input() isVisible: boolean = false;
   @Input() isDrinks : boolean = false;
   @Output() closePopupEvent = new EventEmitter<void>();
-  @Output() itemRemoved = new EventEmitter<any>();
+  @Input() isCentralTable: boolean = true;
 
   constructor(private createEventService: CreateEventService) {
   }
@@ -37,17 +37,4 @@ export class EventCartComponent {
     return this.cart.STARTER.price + this.cart.MAIN.price + this.cart.DESSERT.price;
   }
 
-
-  display2(hi : any) {
-    console.log(' hi:', hi);
-  }
-
-  removeItem(item: any) {
-    this.createEventService.removeItem(item).subscribe({
-      next: (data) => {
-        console.log('item removed:', data);
-        this.itemRemoved.emit(item);
-      }
-    });
-  }
 }

@@ -1,10 +1,11 @@
 <div *ngIf="menusData">
   <h1>Event Name {{ menusData.name }}</h1>
   <h2>Menus</h2>
-  <div *ngFor="let menu of menusData.menu">
-    <button (click)="openmenu()"> {{ menu.name }} </button>
+  <div *ngFor="let menu of menusData.menu; let i=index">
+    <button (click)="openmenu(i)"> {{ menu.name }} </button>
     <button (click)="removeMenu(menu)">Supprimer</button>
     <app-event-cart
+      *ngIf="visibleCartIndex === i"
       [cart]="getItemForCart(menu)"
       [isVisible]="isVisible"
       (closePopupEvent)="closePopup()">

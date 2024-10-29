@@ -10,6 +10,12 @@ export class StoreService {
   private table: any;
   private clientsNumber: number = 1;
   private menuName: string = '';
+  private cart: any = {
+    STARTER: null,
+    MAIN: null,
+    DESSERT: null,
+    BEVERAGES: []
+  }
 
   constructor() { }
   // Setter method to update the number of people
@@ -78,5 +84,27 @@ export class StoreService {
 
   getMenuName() {
     return this.menuName;
+  }
+
+  getCart() {
+    console.log('get cart in the store:', this.cart);
+    return this.cart;
+  }
+
+  clearCart() {
+    this.cart = {
+      STARTER: null,
+      MAIN: null,
+      DESSERT: null,
+      BEVERAGES: []
+    }
+  }
+
+  setCartBeverages(BEVERAGES: any[]) {
+    this.cart.BEVERAGES = BEVERAGES;
+  }
+
+  setCartItems(item: any, category: string) {
+    this.cart[category] = item;
   }
 }
