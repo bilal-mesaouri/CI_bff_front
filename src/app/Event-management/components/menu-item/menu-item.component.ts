@@ -36,7 +36,6 @@ export class MenuItemComponent implements OnInit {
 
 
   remove(item: MenuItem2) {
-
-
+   this.storeService.removeItem(item);
   }
 }

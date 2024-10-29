@@ -139,12 +139,11 @@ export class EventMenuComponent implements OnInit {
   }
 
   private getCart() {
-    if(this.store.getCart() != null) {
-      this.cart.STARTER = this.store.getCart();
-      this.cart.MAIN = this.store.getCart();
-      this.cart.DESSERT = this.store.getCart();
-      this.cart.BEVERAGES = this.store.getCart();
-    }else {
+    const savedCart = this.store.getCart();
+    console.log('Saved cart:', savedCart);
+    if (savedCart) {
+      this.cart.items = savedCart;
+    } else {
       this.initCart();
       console.log('Cart initialized:', this.cart);
     }

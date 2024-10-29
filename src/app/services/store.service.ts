@@ -17,7 +17,22 @@ export class StoreService {
     BEVERAGES: []
   }
 
-  constructor() { }
+  constructor() {
+    this.loadCartFromLocalStorage();
+  }
+
+  saveCartToLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+  }
+
+  loadCartFromLocalStorage() {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      this.cart = JSON.parse(savedCart);
+    }
+  }
+
+
   // Setter method to update the number of people
   setNumberOfPeople(count: number): void {
     this.numberOfCustomers = count;
@@ -98,13 +113,27 @@ export class StoreService {
       DESSERT: null,
       BEVERAGES: []
     }
+    this.saveCartToLocalStorage();
   }
 
   setCartBeverages(BEVERAGES: any[]) {
     this.cart.BEVERAGES = BEVERAGES;
+    this.saveCartToLocalStorage();
   }
 
   setCartItems(item: any, category: string) {
     this.cart[category] = item;
+    this.saveCartToLocalStorage();
+  }
+
+  removeItem(item: any) {
+    console.log('Removing item:', item);
+    console.log('Cart:', this.cart.BEVERAGES);
+    console.log('Category:', item._id);
+
+    this.cart.BEVERAGES = this.cart.BEVERAGES.filter((beverage: any) => beverage._id != item._id);
+
+    console.log('Cart after removing:', this.cart.BEVERAGES);
+    this.saveCartToLocalStorage();
   }
 }
