@@ -1,0 +1,23 @@
+.order {
+  background-color:  #f05d35 !important;
+  bottom: 50%; /* Distance from the bottom of the page */
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  width: 90%;
+  border-radius: 10px;
+  height: 40px;
+}
+.input{
+  position: fixed;
+  transform: translateX(-50%);
+  left: 50%;
+  color: white;
+  width: 90%;
+  border-radius: 10px;
+}

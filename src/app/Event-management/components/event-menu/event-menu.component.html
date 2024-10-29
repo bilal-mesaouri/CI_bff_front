@@ -18,9 +18,8 @@
 </mat-drawer-container>
 
 <div class="cart" *ngIf="!isEmptyCart()" (click)="openPopup()">
-  <h2>Your Cart</h2>
   <div class="cart-items">
-    <h2>Your Cart</h2>
+    <h2>Your menu</h2>
     <div *ngIf="cart.items.STARTER">
       <p>Starter : {{ cart.items.STARTER.shortName }}</p>
     </div>

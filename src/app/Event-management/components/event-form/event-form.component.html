@@ -16,6 +16,10 @@
           <mat-label>Event name</mat-label>
           <input matInput [(ngModel)]="eventName" [ngModelOptions]="{standalone: true}" class="input">
         </mat-form-field>
+        <mat-form-field class="form-field" >
+          <mat-label>Estimate the min number of guests </mat-label>
+          <input matInput [(ngModel)]="minNumberOfGuests" [ngModelOptions]="{standalone: true}" class="input">
+        </mat-form-field>
         <mat-form-field>
           <mat-label>Choose a date</mat-label>
           <input matInput [matDatepicker]="picker"  [(ngModel)]="eventDate" [ngModelOptions]="{standalone: true}">

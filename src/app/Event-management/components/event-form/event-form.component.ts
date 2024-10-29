@@ -31,7 +31,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./event-form.component.css'] // Corrected here
 })
 export class EventFormComponent {
-  eventName: string = ''; // Variable to store event name
+  eventName: string = '';
+  minNumberOfGuests:string='';
   rotation: number = 0;
   eventDate: Date =new Date();
   event:Evenement={} as Evenement;
@@ -44,12 +45,13 @@ export class EventFormComponent {
   }
 
   addEvent() {
-    if(!this.eventName || !this.eventDate){
+    if(!this.eventName || !this.eventDate || !this.minNumberOfGuests ){
       this.openSnackBar("All fields are required!");
     }
     else{
       this.event.name = this.eventName; // Set the event name
       this.event.date = this.formatDateToString(this.eventDate); // Set the formatted date
+      this.event.minNumberOfGuests=this.minNumberOfGuests;
 
       // Make an HTTP POST request to add the event
       this.http.post(this.apiUrl, { event: this.event }).subscribe(

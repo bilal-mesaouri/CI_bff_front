@@ -17,9 +17,7 @@ export class EventCustomerCountComponent {
 
   rotation: number = 0;
   constructor(private router: Router) {}
-  navigateToReservation() {
-    this.router.navigate(['/event-form']);
-  }
+
   rotateCard() {
     this.rotation += 90; // Increase rotation angle by 45 degrees
     if (this.rotation >= 360) {

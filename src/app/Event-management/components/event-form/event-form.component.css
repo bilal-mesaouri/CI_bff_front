@@ -14,7 +14,7 @@
 }
 .order {
   background-color:  #f05d35 !important;
-  bottom: 50%; /* Distance from the bottom of the page */
+  bottom: 20%; /* Distance from the bottom of the page */
   position: fixed;
   left: 50%;
   transform: translateX(-50%);

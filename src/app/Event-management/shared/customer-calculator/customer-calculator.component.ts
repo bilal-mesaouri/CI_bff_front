@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {Router} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
@@ -16,9 +16,7 @@ import { Table } from '../../../model/model';
   styleUrl: './customer-calculator.component.css'
 })
 export class CustomerCalculatorComponent {
-
   count: string = '0';
-  type:string = "customerCount";
   serverLink: string = "http://localhost:9500/";
   tables: Table[] = [] as Table[];
   countEmptyTables:number=0;
@@ -30,7 +28,6 @@ export class CustomerCalculatorComponent {
   }
 
   ngOnInit(): void {
-    if (this.type=="customerCount") {
       this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
         next: (response: Table[]) => {
           this.tables = response;
@@ -41,7 +38,6 @@ export class CustomerCalculatorComponent {
           console.log("Error fetching tables", error);
         }
       });
-    }
   }
   openSnackBar(message: string, action: string = 'Close') {
     this.snackBar.open(message, action, {
@@ -78,19 +74,13 @@ export class CustomerCalculatorComponent {
   }
 
   validateButton() {
-    if (this.type == "customerCount") {
       this.requiredNumberOfTables=Math.ceil(parseInt(this.count, 10) / 4);
       if(this.requiredNumberOfTables>this.countEmptyTables){
         this.openSnackBar("There is not enough available tables,please wait!");
       }
       else{
         this.storeService.setNumberOfPeople(parseInt(this.count, 10));
-        this.router.navigate(['/table-reservation']);
+        this.router.navigate(['/event-table-reservation']);
       }
-    }
-    else{
-      this.router.navigate(['/payment-method', this.count]);
-    }
-this.router.navigate(['/event-table-reservation']);
   }
 }

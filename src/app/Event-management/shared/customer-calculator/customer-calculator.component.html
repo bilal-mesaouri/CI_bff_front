@@ -1,15 +1,11 @@
 <div class="container">
   <div class="header">
-    <h2 *ngIf="type==='customerCount'; else elseBlock">Enter how many you are</h2>
-    <ng-template #elseBlock>
-      <h2>Enter Command ID :</h2>
-    </ng-template>
-
+    <h2>Estimate the max number of guests </h2>
   </div>
   <div class="counter-section">
-    <button *ngIf="type=='customerCount'" class="decrement" (click)="decrement()">-</button>
+    <button class="decrement" (click)="decrement()">-</button>
     <div class="count-display"><p>{{ count }}</p></div>
-    <button *ngIf="type=='customerCount'" class="increment" (click)="increment()">+</button>
+    <button  class="increment" (click)="increment()">+</button>
   </div>
 
   <div class="number-pad">

@@ -83,7 +83,7 @@ export class TableReserveComponent {
       });
     } else {
       this.createOrder();
-      this.router.navigate(['/table-categories']);
+      this.router.navigate(['/crate-menu']);
     }
   }
 
