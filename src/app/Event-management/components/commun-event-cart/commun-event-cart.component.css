@@ -1,0 +1,18 @@
+.commun-card{
+  margin: 20px;
+
+  border: 2px solid grey;
+  border-radius: 20px;
+  background-color: white;
+
+}
+
+.commun-buttons{
+  margin: 10px;
+  border-radius: 5px;
+  color: white;
+  background-color:  #46cd6d;
+  padding: 10px;
+  border: none;
+
+}

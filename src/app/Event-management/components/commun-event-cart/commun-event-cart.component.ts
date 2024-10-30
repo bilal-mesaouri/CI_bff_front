@@ -5,16 +5,16 @@ import {NgForOf, NgIf} from "@angular/common";
 import {MenuItemComponent} from "../menu-item/menu-item.component";
 import {EventCartComponent} from "../event-cart/event-cart.component";
 import {CreateEventService} from "../../../services/create-event.service";
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
   selector: 'app-commun-event-cart',
   standalone: true,
-  imports: [NgIf, NgForOf, MenuItemComponent, EventCartComponent],
+  imports: [NgIf, NgForOf, MenuItemComponent, EventCartComponent, MatCardModule],
   templateUrl: './commun-event-cart.component.html',
   styleUrl: './commun-event-cart.component.css'
 })
 export class CommunEventCartComponent implements OnInit, OnDestroy{
-
   private fileChangeSubscription: Subscription | undefined;
   menusData: any = {
     name: "",

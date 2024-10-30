@@ -1,25 +1,34 @@
-<div *ngIf="menusData">
-  <h1>Event Name {{ menusData.name }}</h1>
-  <h2>Menus</h2>
-  <div *ngFor="let menu of menusData.menu; let i=index">
-    <button (click)="openmenu(i)"> {{ menu.name }} </button>
-    <button (click)="removeMenu(menu)">Supprimer</button>
-    <app-event-cart
-      *ngIf="visibleCartIndex === i"
-      [cart]="getItemForCart(menu)"
-      [isVisible]="isVisible"
-      (closePopupEvent)="closePopup()">
-    </app-event-cart>
 
-  </div>
-  <button (click)="openDrinks()">  Boissons </button>
-  <app-event-cart
-    [cart]="getDrinks()"
-    [isVisible]="isDrinksVisible"
-    [isDrinks]="true"
-    (closePopupEvent)= "closeDrinks()">
-  </app-event-cart>
+<mat-card appearance="outlined" class="commun-card">
+  <mat-card-content>
+    <div *ngIf="menusData">
+      <h1 class="event-name-title mb-2">{{ menusData.name }} Event </h1>
+      <h2 class="mt-4">Suggested Menus</h2>
+      <div class="row">
+
+      </div>
+      <div *ngFor="let menu of menusData.menu; let i=index" >
+        <button (click)="openmenu(i)" class="commun-buttons"> {{ menu.name }} </button>
+        <button (click)="removeMenu(menu)" class="commun-buttons">Supprimer</button>
+        <app-event-cart
+          *ngIf="visibleCartIndex === i"
+          [cart]="getItemForCart(menu)"
+          [isVisible]="isVisible"
+          (closePopupEvent)="closePopup()">
+        </app-event-cart>
+
+      </div>
+      <button (click)="openDrinks()" class="commun-buttons">  Boissons </button>
+      <app-event-cart
+        [cart]="getDrinks()"
+        [isVisible]="isDrinksVisible"
+        [isDrinks]="true"
+        (closePopupEvent)= "closeDrinks()">
+      </app-event-cart>
 
 
-  <button (click)="validateMenus()">Valider les menus</button>
-</div>
+      <button (click)="validateMenus()" class="commun-buttons validate" >Valider les menus</button>
+    </div>
+  </mat-card-content>
+</mat-card>
+

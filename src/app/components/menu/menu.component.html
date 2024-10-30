@@ -22,6 +22,7 @@
 <button *ngIf=" getClientNumber() !=1" class="copyButton" (click)="openCopyModal()" >
   Copy the order
 </button>
+
 <div class="cart" *ngIf="cart.items.length> 0" (click)="openPopup()">
   <h2>Your Cart</h2>
   <div class="cart-items">

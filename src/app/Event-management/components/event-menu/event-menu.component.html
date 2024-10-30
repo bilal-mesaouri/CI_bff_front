@@ -5,7 +5,7 @@
   <mat-drawer-content class="side-bar-content">
     <div class="menu-container">
       <div class="row">
-        <div *ngFor="let item of items" class="col-6 col-sm-4 col-md-3 mb-0">
+        <div *ngFor="let item of items" class="col-6 col-sm-4 col-md-3 mb-2">
           <app-menu-item
             [item]="item"
             (click)="addItem(item, item.category)">
@@ -18,8 +18,8 @@
 </mat-drawer-container>
 
 <div class="cart" *ngIf="!isEmptyCart()" (click)="openPopup()">
+  <h2>Your menu</h2>
   <div class="cart-items">
-    <h2>Your menu</h2>
     <div *ngIf="cart.items.STARTER">
       <p>Starter : {{ cart.items.STARTER.shortName }}</p>
     </div>
@@ -27,11 +27,9 @@
     <div *ngIf="cart.items.MAIN">
       <p>Main : {{ cart.items.MAIN.shortName }}</p>
     </div>
-
     <div *ngIf="cart.items.DESSERT">
       <p>Dessert: {{ cart.items.DESSERT.shortName }}</p>
     </div>
-
     <div *ngIf="cart.items.BEVERAGES && cart.items.BEVERAGES.length > 0">
       <h3>Beverages</h3>
       <div *ngFor="let beverage of cart.items.BEVERAGES">

@@ -2,34 +2,37 @@
   <div class="modal-content" (click)="$event.stopPropagation()">
     <span class="close" (click)="closePopup()">&times;</span>
     <div *ngIf="!isDrinks">
-    <h2>Your Cart</h2>
-      <div *ngIf="cart.STARTER">
-        <h3>Starter</h3>
-        <app-menu-item
-          [item]="cart.STARTER">
-        </app-menu-item>
-      </div>
+    <h2>Your Menu </h2>
+      <div class="row ">
+        <div *ngIf="cart.STARTER" class="col-4 col-sm-4 col-md-3 mr-16 ">
+          <h3>Starter</h3>
+          <app-menu-item
+            [item]="cart.STARTER">
+          </app-menu-item>
+        </div>
 
-      <div *ngIf="cart.MAIN">
-        <h3>Main</h3>
-        <app-menu-item
-          [item]="cart.MAIN">
-        </app-menu-item>
-      </div>
+        <div *ngIf="cart.MAIN" class="col-4 col-sm-4 col-md-3 mr-16">
+          <h3>Main</h3>
+          <app-menu-item
+            [item]="cart.MAIN">
+          </app-menu-item>
+        </div>
 
-      <div *ngIf="cart.DESSERT">
-        <h3>Dessert</h3>
-        <app-menu-item
-          [item]="cart.DESSERT">
-        </app-menu-item>
-      </div>
+        <div *ngIf="cart.DESSERT" class="col-4 col-sm-4 col-md-3 ">
+          <h3>Dessert</h3>
+          <app-menu-item
+            [item]="cart.DESSERT">
+          </app-menu-item>
+        </div>
 
-      <div *ngIf="cart.BEVERAGES && cart.BEVERAGES.length > 0">
-        <h3>Beverages</h3>
-        <div *ngFor="let beverage of cart.BEVERAGES">
-          <p>{{ beverage.shortName }}</p>
+        <div *ngIf="cart.BEVERAGES && cart.BEVERAGES.length > 0">
+          <h3>Beverages</h3>
+          <div *ngFor="let beverage of cart.BEVERAGES">
+            <p>{{ beverage.shortName }}</p>
+          </div>
         </div>
       </div>
+
 
       <p>Total: {{ getTotal() }} €</p>
     </div>

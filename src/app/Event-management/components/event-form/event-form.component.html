@@ -9,11 +9,15 @@
   </mat-card>
   <!-- Overlay Card -->
   <mat-card class="overlay-card" [ngStyle]="{'transform': 'translate(-50%, -50%) rotate(' + rotation + 'deg)'}">
-
+<mat-card-header>
+  <mat-card-title class="event-details-title">
+    Event details
+  </mat-card-title>
+</mat-card-header>
     <mat-card-content>
       <form class="form">
         <mat-form-field class="form-field" >
-          <mat-label>Event name</mat-label>
+          <mat-label class="label" >Event name</mat-label>
           <input matInput [(ngModel)]="eventName" [ngModelOptions]="{standalone: true}" class="input">
         </mat-form-field>
         <mat-form-field class="form-field" >

@@ -1,5 +1,5 @@
 <div style="position: relative;">
-  <mat-card>
+  <mat-card class="mat-card-splitter">
     <mat-grid-list cols="2" rowHeight="2:1">
       <mat-grid-tile>1</mat-grid-tile>
       <mat-grid-tile>2</mat-grid-tile>
@@ -10,9 +10,11 @@
 
   <!-- Overlay Card -->
   <mat-card class="overlay-card" [ngStyle]="{'transform': 'translate(-50%, -50%) rotate(' + rotation + 'deg)'}">
+    <h1>Welcome to PFK!</h1>
+    <h2>Explore our menus, create your own event, and enjoy a unique dining experience.</h2>
 
     <mat-card-content>
-      <button mat-flat-button class="order" (click)="navigateToReservation()">Event creation</button>
+      <button mat-flat-button class="order" (click)="navigateToReservation()">Click here to start</button>
     </mat-card-content>
     <button mat-raised-button (click)="rotateCard()" class="rotate-button"><mat-icon>cached</mat-icon></button>  </mat-card>
 </div>

@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'CI_bff_front';
-  routesWithoutNavBar = ['/']
+  routesWithoutNavBar = ['/','/event-form','/event-customer-count','/event-table-reservation','/crate-menu','/event-menu','/common-cart']
   constructor(private router: Router){}
 
   addNavBar(){
