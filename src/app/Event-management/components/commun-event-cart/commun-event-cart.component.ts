@@ -23,6 +23,7 @@ export class CommunEventCartComponent implements OnInit, OnDestroy{
   };
   isVisible :boolean = false;
   isDrinksVisible : boolean = false;
+  visibleCartIndex: number | null = null
 
   constructor(private webSocketService: WebSocketService, private createEventService:CreateEventService) {}
 
@@ -42,13 +43,15 @@ export class CommunEventCartComponent implements OnInit, OnDestroy{
   }
 
 
-  openmenu() {
+  openmenu(index: number) {
     this.isVisible = true;
-    console.log('isVisible:', this.isVisible);
+    this.visibleCartIndex = index;
+
   }
 
   closePopup() {
     this.isVisible = false;
+    this.visibleCartIndex = null;
   }
 
   getItemForCart(menu: any) {

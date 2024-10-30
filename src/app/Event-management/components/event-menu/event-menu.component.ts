@@ -50,6 +50,7 @@ export class EventMenuComponent implements OnInit {
   ngOnInit(): void {
     this.displayAllItems();
     this.setMenuName();
+    this.getCart();
   }
 
   displayAllItems() {
@@ -65,13 +66,18 @@ export class EventMenuComponent implements OnInit {
   }
 
   addItemToCategory(item: MenuItem, category: string) {
+    console.log('Adding item to category:', category);
     this.cart.items[category] = item;
-    console.log('Added to category:', this.cart.items[category]);
+    console.log('this cart items:', this.cart.items[category]);
+    this.store.setCartItems(item, category);
   }
 
   addBeverage(item: MenuItem) {
-    this.cart.items.BEVERAGES.push(item);
-    console.log('Added to BEVERAGES:', item);
+    //check if the item is already in the cart if i's not the case add it
+    if (!this.cart.items.BEVERAGES.includes(item)) {
+      this.cart.items.BEVERAGES.push(item);
+      this.store.setCartBeverages(this.cart.items.BEVERAGES);
+    }
   }
 
   removeBeverage(index: number) {
@@ -96,7 +102,6 @@ export class EventMenuComponent implements OnInit {
 
 
   addItem(item: MenuItem, category: string) {
-    console.log('Category:', category);
     if (category === 'BEVERAGE') {
       this.addBeverage(item);
     }else {
@@ -110,15 +115,13 @@ export class EventMenuComponent implements OnInit {
 
   validateMenu() {
     this.createEventService.getEvent().subscribe((data: any) => {
-      console.log('validateMenu menu :', this.cart );
       let event ={
         ...data,
         menu: this.cart
       }
-      console.log('validateMenu event :', event );
       this.createEventService.createMenu(event).subscribe((data: any) => {
-        console.log('Menu created:', data);
       });
+      this.store.clearCart();
       this.router.navigate(['/crate-menu']);
     });
   }
@@ -135,5 +138,25 @@ export class EventMenuComponent implements OnInit {
     return total;
   }
 
+  private getCart() {
+    const savedCart = this.store.getCart();
+    console.log('Saved cart:', savedCart);
+    if (savedCart) {
+      this.cart.items = savedCart;
+    } else {
+      this.initCart();
+      console.log('Cart initialized:', this.cart);
+    }
+  }
 
+  private initCart() {
+    this.cart = {
+      items: {
+        STARTER: null,
+        MAIN: null,
+        DESSERT: null,
+        BEVERAGES: []
+      }
+    }
+  }
 }

@@ -44,7 +44,9 @@
 </div>
 
 <app-event-cart
-  [cart]="cart.items"
+  [cart]="cart.items.BEVERAGES"
   [isVisible]="isPopupVisible"
+  [isDrinks]="true"
+  [isCentralTable]="false"
   (closePopupEvent)="closePopup()">
 </app-event-cart>

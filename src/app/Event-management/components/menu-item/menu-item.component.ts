@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem2 } from '../../../model/MenuItem2';
 import { CreateEventService } from '../../../services/create-event.service';
+import { StoreService} from "../../../services/store.service";
 
 
 @Component({
@@ -16,13 +17,13 @@ export class MenuItemComponent implements OnInit {
   @Output() itemClicked = new EventEmitter<MenuItem2>();
   @Output() deleteItem = new EventEmitter<void>();
   @Input() isDrinksVisible: boolean = false;
+  @Input() centralTable: boolean = false;
 
-  constructor(public createEventService: CreateEventService) { }
+  constructor(public createEventService: CreateEventService,public storeService:StoreService) { }
 
   onDelete(item: any) {
       this.createEventService.removeItem(item).subscribe({
         next: (data) => {
-          console.log('item removed:', data);
           this.deleteItem.emit(item);
         }
       });
@@ -34,4 +35,7 @@ export class MenuItemComponent implements OnInit {
   }
 
 
+  remove(item: MenuItem2) {
+   this.storeService.removeItem(item);
+  }
 }

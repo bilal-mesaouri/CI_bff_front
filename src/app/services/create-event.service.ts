@@ -30,5 +30,9 @@ export class CreateEventService {
     console.log('menusData:');
     return this.http.get('http://localhost:3003/event/validate');
   }
+
+  getMenus(menu: any) {
+    return this.http.get('http://localhost:3003/event/menus'+ menu.name);
+  }
 }
 

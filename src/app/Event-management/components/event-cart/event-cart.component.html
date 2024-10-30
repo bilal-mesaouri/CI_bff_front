@@ -34,11 +34,11 @@
       <p>Total: {{ getTotal() }} €</p>
     </div>
     <div *ngIf="isDrinks">
-      <h2>Your Cart</h2>
       <div *ngFor="let item of cart" class="cart-item">
         <app-menu-item
           [item]="item"
-          [isDrinksVisible]="true">
+          [isDrinksVisible]="true"
+          [centralTable]="isCentralTable">
         </app-menu-item>
       </div>
     </div>

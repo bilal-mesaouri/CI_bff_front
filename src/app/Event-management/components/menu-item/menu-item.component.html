@@ -5,7 +5,10 @@
     <p>Price : {{ item.price }} €</p>
     <p>Category : {{ item.category }}</p>
   </div>
-  <div *ngIf="isDrinksVisible">
+  <div *ngIf="isDrinksVisible && centralTable">
   <button (click)="onDelete(item)">Delete</button>
+  </div>
+  <div *ngIf="isDrinksVisible && !centralTable">
+    <button (click)="remove(item)">Delete</button>
   </div>
 </div>
