@@ -1,6 +1,6 @@
 <mat-form-field class="form-field" class="input">
   <mat-label>Enter menu name</mat-label>
-  <input matInput [(ngModel)]="menuName" [ngModelOptions]="{standalone: true}" >
+  <input matInput [(ngModel)]="menuName" [ngModelOptions]="{standalone: true}" required>
 </mat-form-field>
 
 <button (click)="onSubmit()" class="order"> Validate </button>

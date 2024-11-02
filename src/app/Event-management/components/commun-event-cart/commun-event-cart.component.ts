@@ -6,6 +6,7 @@ import {MenuItemComponent} from "../menu-item/menu-item.component";
 import {EventCartComponent} from "../event-cart/event-cart.component";
 import {CreateEventService} from "../../../services/create-event.service";
 import {MatCardModule} from '@angular/material/card';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-commun-event-cart',
@@ -25,7 +26,7 @@ export class CommunEventCartComponent implements OnInit, OnDestroy{
   isDrinksVisible : boolean = false;
   visibleCartIndex: number | null = null
 
-  constructor(private webSocketService: WebSocketService, private createEventService:CreateEventService) {}
+  constructor(private webSocketService: WebSocketService,private router:Router, private createEventService:CreateEventService) {}
 
   ngOnDestroy(): void {
     if (this.fileChangeSubscription) {
@@ -89,6 +90,7 @@ export class CommunEventCartComponent implements OnInit, OnDestroy{
     this.createEventService.validate().subscribe({
       next: (data) => {
         console.log('Menu créé:', data);
+        this.router.navigate(['/']);
       }
     });
   }

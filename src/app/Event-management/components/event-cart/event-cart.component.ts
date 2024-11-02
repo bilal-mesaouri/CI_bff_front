@@ -34,7 +34,17 @@ export class EventCartComponent {
 
   getTotal() {
     // @ts-ignore
-    return this.cart.STARTER.price + this.cart.MAIN.price + this.cart.DESSERT.price;
+    let total=0;
+    if (this.cart.STARTER){
+      total = total+this.cart.STARTER.price;
+    }
+    if (this.cart.MAIN){
+      total = total+this.cart.MAIN.price;
+    }
+    if (this.cart.DESSERT){
+      total = total+this.cart.DESSERT.price;
+    }
+    return total;
   }
 
 }

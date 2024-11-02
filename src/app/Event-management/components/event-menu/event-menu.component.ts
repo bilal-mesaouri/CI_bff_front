@@ -73,7 +73,9 @@ export class EventMenuComponent implements OnInit {
   }
 
   addBeverage(item: MenuItem) {
-    //check if the item is already in the cart if i's not the case add it
+    if (this.cart.items.BEVERAGES == null) {
+      this.cart.items.BEVERAGES = [];
+    }
     if (!this.cart.items.BEVERAGES.includes(item)) {
       this.cart.items.BEVERAGES.push(item);
       this.store.setCartBeverages(this.cart.items.BEVERAGES);
@@ -97,7 +99,7 @@ export class EventMenuComponent implements OnInit {
     return  (this.cart.items.STARTER == null ) &&
             (this.cart.items.MAIN == null )&&
             (this.cart.items.DESSERT == null) &&
-            (this.cart.items.BEVERAGES.length == 0);
+            (this.cart.items.BEVERAGES == null || this.cart.items.BEVERAGES.length == 0);
   }
 
 
