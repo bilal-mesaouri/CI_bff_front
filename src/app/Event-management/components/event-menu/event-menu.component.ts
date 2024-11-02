@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HeaderComponent} from "../header/header.component";
 import {MatDrawer, MatDrawerContainer, MatDrawerContent} from "@angular/material/sidenav";
 import {MenuItemComponent} from "../menu-item/menu-item.component";
@@ -9,6 +9,9 @@ import { MenuItem } from '../../../model/MenuItem';
 import {EventCartComponent} from "../event-cart/event-cart.component";
 import { StoreService} from "../../../services/store.service";
 import { CreateEventService } from "../../../services/create-event.service";
+import {CartComponent} from "../../../components/cart/cart.component";
+import {OrderService} from "../../../services/order.service";
+import {Cart} from "../../../model/Cart";
 
 
 @Component({
@@ -22,16 +25,24 @@ import { CreateEventService } from "../../../services/create-event.service";
     MenuItemComponent,
     NgForOf,
     EventCartComponent,
-    NgIf
+    NgIf,
+    CartComponent
 
   ],
   templateUrl: './event-menu.component.html',
   styleUrl: './event-menu.component.css'
 })
 export class EventMenuComponent implements OnInit {
+  @Input() isEventMenu:boolean=false;
+  orderValidated:boolean=false;
+  othersOrders: any[] = [];
+
   items: MenuItem[] = [];
   isPopupVisible: boolean = false;
-  cart: any = {
+  isCopyModalVisible: boolean = false;
+  isDetailModalVisible: boolean = false;
+  selectedClient: any = {};
+  eventCart: any = {
     name: "",
     items: {
       STARTER: null,
@@ -40,10 +51,100 @@ export class EventMenuComponent implements OnInit {
       BEVERAGES: []
     }
   };
+  cart: Cart = {
+    orderNumber: 0,
+    clientNumber:0,
+    tableNumber: 0,
+    items:[]
+  };
 
 
+  getClientNumber(): number {
+    return this.store.getClientNumber();
+  }
+  getTotal(): number {
+    let total = 0;
+    this.cart.items.forEach(item => {
+      total += item.price * item.quantity;
+    });
+    return total;
+  }
+
+  navigateToHome() {
+    this.router.navigate(['/']);
+  }
+  getorderNumber(): number {
+    return this.store.getOrder().commandId;
+  }
+  closeDetailModal() {
+    this.isDetailModalVisible = false;
+    this.isCopyModalVisible = true;
+  }
+
+  validateCart() {
+
+    console.log('Cart validated', this.eventCart);
+    this.orderServiceService.addOrder(this.eventCart).subscribe((data: any) => {
+      console.log('Order added', data);
+    });
+
+
+    if (this.store.getTableCompteur() === this.store.getOrder().tables.length-1 && this.store.getClientNumber() === this.store.getTable().clients.length) {
+      this.store.setClientNumber(1);
+      this.store.setTableCompteur(0);
+      console.log('Order validated', this.store.getOrder().commandId);
+      this.orderServiceService.validateOrder(this.store.getOrder().commandId).subscribe((data: any) => {
+        console.log('Order validated', data);
+      });
+      localStorage.clear();
+      this.orderValidated=true;
+    }else {
+      this.store.incrementClient();
+      this.router.navigate(['/table-categories']);
+    }
+
+  }
+  updateLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+  }
+  calculateTotal(items: any[]) {
+    return items.reduce((total, item) => total + item.quantity * item.price, 0);
+  }
+
+  copyOrder() {
+    this.cart.items = this.selectedClient.items;
+    this.updateLocalStorage();
+    this.isDetailModalVisible = false;
+  }
+  closeCopyModal() {
+    this.isCopyModalVisible = false;
+  }
+  getdetails(client: any) {
+    this.selectedClient = client;
+    this.isCopyModalVisible = false;
+    this.isDetailModalVisible = true;
+  }
+  openCopyModal() {
+    this.isCopyModalVisible = true;
+    this.getOthersOrder();
+  }
+  gettableNumber(): number {
+    return this.store.getTable().tableNumber;
+  }
+
+  getOthersOrder() : any{
+    this.orderServiceService.getCilentOrders(this.getorderNumber(),this.getClientNumber(),this.gettableNumber()).subscribe((data: any) => {
+      console.log('data is here ',data)
+      console.log(data.length)
+      if (data.length > 0) {
+
+        this.othersOrders = data;
+      }
+      console.log('Orders fetched', this.othersOrders);
+    });
+  }
   constructor(public menuServiceService: MenuServiceService, private router: Router,
-              private store: StoreService, private createEventService: CreateEventService) {
+              private store: StoreService, private createEventService: CreateEventService,public orderServiceService:OrderService) {
   }
 
 
@@ -67,21 +168,21 @@ export class EventMenuComponent implements OnInit {
 
   addItemToCategory(item: MenuItem, category: string) {
     console.log('Adding item to category:', category);
-    this.cart.items[category] = item;
-    console.log('this cart items:', this.cart.items[category]);
+    this.eventCart.items[category] = item;
+    console.log('this cart items:', this.eventCart.items[category]);
     this.store.setCartItems(item, category);
   }
 
   addBeverage(item: MenuItem) {
     //check if the item is already in the cart if i's not the case add it
-    if (!this.cart.items.BEVERAGES.includes(item)) {
-      this.cart.items.BEVERAGES.push(item);
-      this.store.setCartBeverages(this.cart.items.BEVERAGES);
+    if (!this.eventCart.items.BEVERAGES.includes(item)) {
+      this.eventCart.items.BEVERAGES.push(item);
+      this.store.setCartBeverages(this.eventCart.items.BEVERAGES);
     }
   }
 
   removeBeverage(index: number) {
-    this.cart.items.BEVERAGES.splice(index, 1);
+    this.eventCart.items.BEVERAGES.splice(index, 1);
     console.log('Removed from BEVERAGES at index:', index);
   }
 
@@ -94,10 +195,10 @@ export class EventMenuComponent implements OnInit {
   }
 
   isEmptyCart() {
-    return  (this.cart.items.STARTER == null ) &&
-            (this.cart.items.MAIN == null )&&
-            (this.cart.items.DESSERT == null) &&
-            (this.cart.items.BEVERAGES.length == 0);
+    return  (this.eventCart.items.STARTER == null ) &&
+            (this.eventCart.items.MAIN == null )&&
+            (this.eventCart.items.DESSERT == null) &&
+            (this.eventCart.items.BEVERAGES.length == 0);
   }
 
 
@@ -110,14 +211,14 @@ export class EventMenuComponent implements OnInit {
   }
 
   setMenuName() {
-    this.cart.name = this.store.getMenuName();
+    this.eventCart.name = this.store.getMenuName();
   }
 
   validateMenu() {
     this.createEventService.getEvent().subscribe((data: any) => {
       let event ={
         ...data,
-        menu: this.cart
+        menu: this.eventCart
       }
       this.createEventService.createMenu(event).subscribe((data: any) => {
       });
@@ -128,10 +229,10 @@ export class EventMenuComponent implements OnInit {
 
   getTotalPrice() {
     let total = 0;
-    for (const key in this.cart.items) {
-      if (this.cart.items[key] != null) {
+    for (const key in this.eventCart.items) {
+      if (this.eventCart.items[key] != null) {
         if (key != 'BEVERAGES') {
-          total += this.cart.items[key].price;
+          total += this.eventCart.items[key].price;
         }
       }
     }
@@ -142,15 +243,15 @@ export class EventMenuComponent implements OnInit {
     const savedCart = this.store.getCart();
     console.log('Saved cart:', savedCart);
     if (savedCart) {
-      this.cart.items = savedCart;
+      this.eventCart.items = savedCart;
     } else {
       this.initCart();
-      console.log('Cart initialized:', this.cart);
+      console.log('Cart initialized:', this.eventCart);
     }
   }
 
   private initCart() {
-    this.cart = {
+    this.eventCart = {
       items: {
         STARTER: null,
         MAIN: null,

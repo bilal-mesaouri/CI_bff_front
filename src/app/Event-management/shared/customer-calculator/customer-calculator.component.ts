@@ -16,6 +16,7 @@ import { Table } from '../../../model/model';
   styleUrl: './customer-calculator.component.css'
 })
 export class CustomerCalculatorComponent {
+  @Input() title:string="Enter how many you are";
   count: string = '0';
   serverLink: string = "http://localhost:9500/";
   tables: Table[] = [] as Table[];

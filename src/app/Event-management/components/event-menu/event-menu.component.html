@@ -16,35 +16,100 @@
   </mat-drawer-content>
 
 </mat-drawer-container>
+<div *ngIf="isEventMenu">
+  <div class="cart" *ngIf="!isEmptyCart()" (click)="openPopup()">
+    <h2>Your menu</h2>
+    <div class="cart-items">
+      <div *ngIf="eventCart.items.STARTER">
+        <p>Starter : {{ eventCart.items.STARTER.shortName }}</p>
+      </div>
 
-<div class="cart" *ngIf="!isEmptyCart()" (click)="openPopup()">
-  <h2>Your menu</h2>
-  <div class="cart-items">
-    <div *ngIf="cart.items.STARTER">
-      <p>Starter : {{ cart.items.STARTER.shortName }}</p>
+      <div *ngIf="eventCart.items.MAIN">
+        <p>Main : {{ eventCart.items.MAIN.shortName }}</p>
+      </div>
+      <div *ngIf="eventCart.items.DESSERT">
+        <p>Dessert: {{ eventCart.items.DESSERT.shortName }}</p>
+      </div>
+      <div *ngIf="eventCart.items.BEVERAGES && eventCart.items.BEVERAGES.length > 0">
+        <h3>Beverages</h3>
+        <div *ngFor="let beverage of eventCart.items.BEVERAGES">
+          <p>{{ beverage.shortName }}</p>
+        </div>
+      </div>
+      <p>Total: {{ getTotalPrice() }} €</p>
     </div>
+    <button (click)="validateMenu()">Validate Menu</button>
+  </div>
 
-    <div *ngIf="cart.items.MAIN">
-      <p>Main : {{ cart.items.MAIN.shortName }}</p>
-    </div>
-    <div *ngIf="cart.items.DESSERT">
-      <p>Dessert: {{ cart.items.DESSERT.shortName }}</p>
-    </div>
-    <div *ngIf="cart.items.BEVERAGES && cart.items.BEVERAGES.length > 0">
-      <h3>Beverages</h3>
-      <div *ngFor="let beverage of cart.items.BEVERAGES">
-        <p>{{ beverage.shortName }}</p>
+  <app-event-cart
+    [cart]="eventCart.items.BEVERAGES"
+    [isVisible]="isPopupVisible"
+    [isDrinks]="true"
+    [isCentralTable]="false"
+    (closePopupEvent)="closePopup()">
+  </app-event-cart>
+
+</div>
+<div *ngIf="!isEventMenu">
+
+  <button *ngIf=" getClientNumber() !=1" class="copyButton" (click)="openCopyModal()" >
+    Copy the order
+  </button>
+
+  <div class="cart" *ngIf="eventCart.items.length> 0" (click)="openPopup()">
+    <h2>Your Cart</h2>
+    <div class="cart-items">
+      <div *ngFor="let item of eventCart.items" class="cart-item">
+        <p>{{ item.shortName }} - Quantity: {{ item.quantity }}</p>
       </div>
     </div>
-    <p>Total: {{ getTotalPrice() }} €</p>
-    </div>
-  <button (click)="validateMenu()">Validate Menu</button>
-</div>
+    <p>Total: {{ getTotal() }} €</p>
+    <button (click)="validateCart()">Validate Cart</button>
+  </div>
 
-<app-event-cart
-  [cart]="cart.items.BEVERAGES"
-  [isVisible]="isPopupVisible"
-  [isDrinks]="true"
-  [isCentralTable]="false"
-  (closePopupEvent)="closePopup()">
-</app-event-cart>
+  <app-cart
+    [cart]="eventCart.items"
+    [isVisible]="isPopupVisible"
+    (closePopupEvent)="closePopup()">
+  </app-cart>
+
+
+  <div class="modal" *ngIf="isCopyModalVisible">
+    <div class="modal-content">
+      <span class="close" (click)="closeCopyModal()">&times;</span>
+      <h2>Copy the order</h2>
+      <div class="copy-container">
+        <div *ngFor="let client of othersOrders" class="client">
+          <button (click)="getdetails(client)">Client {{ client.client }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="isDetailModalVisible">
+    <div class="modal-content">
+      <!--    <span class="close" (click)="closeDetailModal()">&times;</span>-->
+      <h2>Details for Client P{{ selectedClient.client}}</h2>
+      <div class="details-container">
+        <ul>
+          <li *ngFor="let item of selectedClient.items"> {{ item.shortName }} - {{ item.quantity }}</li>
+        </ul>
+        <p>Total: {{ calculateTotal(selectedClient.items) }}€</p>
+        <button (click)="copyOrder()">Copy Order</button>
+        <button (click)="closeDetailModal()">Back</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" *ngIf="orderValidated">
+    <div class="modal-content">
+      <h3>Your Order is validated !</h3>
+      <h3>here is your Order Number:</h3>
+      <h2>{{getorderNumber()}}</h2>
+      <button (click)="navigateToHome()">OK</button>
+    </div>
+  </div>
+
+
+</div>
