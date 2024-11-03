@@ -30,14 +30,14 @@
     <div *ngIf="cart.items.DESSERT">
       <p>Dessert: {{ cart.items.DESSERT.shortName }}</p>
     </div>
-    <div *ngIf="cart.items.BEVERAGES && cart.items.BEVERAGES.length > 0">
-      <h3>Beverages</h3>
-      <div *ngFor="let beverage of cart.items.BEVERAGES">
-        <p>{{ beverage.shortName }}</p>
-      </div>
-    </div>
     <p>Total: {{ getTotalPrice() }} €</p>
     </div>
+  <div *ngIf="cart.items.BEVERAGES && cart.items.BEVERAGES.length > 0">
+  <p>Beverages :
+    <span *ngFor="let beverage of cart.items.BEVERAGES">{{ beverage.shortName }} |
+    </span>
+  </p>
+</div>
   <button (click)="validateMenu()">Validate Menu</button>
 </div>
 

@@ -11,4 +11,9 @@
   <div *ngIf="isDrinksVisible && !centralTable">
     <button (click)="remove(item)">Delete</button>
   </div>
+  <div class="quantity-controls" *ngIf="isNotEvent">
+    <button (click)="decreaseQuantity(item)" class="increase-button">−</button>
+    <p class="quantity">Quantity: {{ item.quantity }}</p>
+    <button (click)="increaseQuantity(item)" class="increase-button">+</button>
+  </div>
 </div>

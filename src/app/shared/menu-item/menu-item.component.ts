@@ -15,19 +15,19 @@ export class MenuItemComponent {
   @Input() item!: MenuItem;
   @Output() quantityChanged = new EventEmitter<{ itemId: string, quantity: number }>();  // Emet des infos sur l'item et la quantité
 
-  constructor(public menuComponent:MenuComponent) {}
+  constructor() {}
 
 
   increaseQuantity(item: any) {
     item.quantity += 1;
-    this.menuComponent.updateCart(item)
+    this.quantityChanged.emit({itemId: item.id, quantity:item.quantity})
   }
 
   // Méthode pour diminuer la quantité
   decreaseQuantity(item: any) {
     if (item.quantity > 0) {
       item.quantity -= 1;
-      this.menuComponent.updateCart(item)
+      this.quantityChanged.emit({itemId: item.id, quantity:item.quantity})
     }
   }
 

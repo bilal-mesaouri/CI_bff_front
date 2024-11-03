@@ -5,5 +5,6 @@ export interface MenuItem2 {
   price: number;
   category: string;
   image: string;
+  quantity:number;
 }
 

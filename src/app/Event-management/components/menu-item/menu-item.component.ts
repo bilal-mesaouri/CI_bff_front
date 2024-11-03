@@ -18,6 +18,8 @@ export class MenuItemComponent implements OnInit {
   @Output() deleteItem = new EventEmitter<void>();
   @Input() isDrinksVisible: boolean = false;
   @Input() centralTable: boolean = false;
+  @Input() isNotEvent:boolean=false;
+  @Output() quantityChanged = new EventEmitter<{ itemId: string, quantity: number }>();  // Emet des infos sur l'item et la quantité
 
   constructor(public createEventService: CreateEventService,public storeService:StoreService) { }
 
@@ -34,6 +36,18 @@ export class MenuItemComponent implements OnInit {
 
   }
 
+  increaseQuantity(item: any) {
+    item.quantity += 1;
+    this.quantityChanged.emit({itemId: item.id, quantity:item.quantity})
+  }
+
+  // Méthode pour diminuer la quantité
+  decreaseQuantity(item: any) {
+    if (item.quantity > 0) {
+      item.quantity -= 1;
+      this.quantityChanged.emit({itemId: item.id, quantity:item.quantity})
+    }
+  }
 
   remove(item: MenuItem2) {
    this.storeService.removeItem(item);

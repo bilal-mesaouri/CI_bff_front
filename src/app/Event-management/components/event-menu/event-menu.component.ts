@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {HeaderComponent} from "../header/header.component";
 import {MatDrawer, MatDrawerContainer, MatDrawerContent} from "@angular/material/sidenav";
 import {MenuItemComponent} from "../menu-item/menu-item.component";
@@ -43,7 +43,7 @@ export class EventMenuComponent implements OnInit {
 
 
   constructor(public menuServiceService: MenuServiceService, private router: Router,
-              private store: StoreService, private createEventService: CreateEventService) {
+              private store: StoreService, private createEventService: CreateEventService,private  cdref:ChangeDetectorRef) {
   }
 
 
@@ -77,8 +77,9 @@ export class EventMenuComponent implements OnInit {
       this.cart.items.BEVERAGES = [];
     }
     if (!this.cart.items.BEVERAGES.includes(item)) {
-      this.cart.items.BEVERAGES.push(item);
+      this.cart.items.BEVERAGES = [...this.cart.items.BEVERAGES, item]
       this.store.setCartBeverages(this.cart.items.BEVERAGES);
+      this.cdref.detectChanges()
     }
   }
 
