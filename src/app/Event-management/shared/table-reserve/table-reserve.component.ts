@@ -32,6 +32,7 @@ export class TableReserveComponent {
   numberOfTables: number = 0;
   selectedCount: number = 0;
   selectedTables: number[] = [];
+  private apiUrl = 'http://localhost:3003/addEvent';
 
   constructor(
     private http: HttpClient,
@@ -44,8 +45,6 @@ export class TableReserveComponent {
   }
 
   ngOnInit(): void {
-    //this.http.get<Table[]>(this.serverLink + "dining/tables").subscribe({
-    //pull le back stp pour avoir ça
     this.http.get<Table[]>("http://localhost:3003/tables").subscribe({
       next: (response: Table[]) => {
         this.tables = response;
@@ -82,8 +81,19 @@ export class TableReserveComponent {
         panelClass: ['error-snackbar']
       });
     } else {
+      this.storeService.setTablesForEvent(this.selectedTables);
+      this.http.post(this.apiUrl, { event: this.storeService.getEvent() }).subscribe(
+       (response) => {
+         console.log('Event added successfully:', response);
+       },
+       (error) => {
+         console.error('Error adding event:', error);
+
+       }
+     );
       this.createOrder();
       this.router.navigate(['/crate-menu']);
+
     }
   }
 

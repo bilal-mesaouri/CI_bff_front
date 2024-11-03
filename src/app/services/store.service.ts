@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Evenement } from '../model/event';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ export class StoreService {
     DESSERT: null,
     BEVERAGES: []
   }
+  private event: Evenement | undefined;
 
   constructor() {
     this.loadCartFromLocalStorage();
@@ -135,5 +138,17 @@ export class StoreService {
 
     console.log('Cart after removing:', this.cart.BEVERAGES);
     this.saveCartToLocalStorage();
+  }
+
+  setEvent(event:Evenement){
+    this.event=event;
+  }
+  setTablesForEvent(tables: number[]){
+    if(this.event){
+      this.event.tables=tables;
+    }
+  }
+  getEvent(){
+    return this.event;
   }
 }

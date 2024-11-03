@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Evenement } from '../../../model/event';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { StoreService } from '../../../services/store.service';
 
 @Component({
   selector: 'app-event-form',
@@ -38,7 +39,7 @@ export class EventFormComponent {
   event:Evenement={} as Evenement;
   private apiUrl = 'http://localhost:3003/addEvent';
 
-  constructor(private http: HttpClient, private router: Router,private snackBar: MatSnackBar) {}
+  constructor(private http: HttpClient, private router: Router,private snackBar: MatSnackBar, private storeService: StoreService) {}
 
   navigateToReservation() {
     this.addEvent();
@@ -52,9 +53,11 @@ export class EventFormComponent {
       this.event.name = this.eventName; // Set the event name
       this.event.date = this.formatDateToString(this.eventDate); // Set the formatted date
       this.event.minNumberOfGuests=this.minNumberOfGuests;
+      this.storeService.setEvent(this.event);
+      this.router.navigate(['/event-customer-count']);
 
       // Make an HTTP POST request to add the event
-      this.http.post(this.apiUrl, { event: this.event }).subscribe(
+ /*     this.http.post(this.apiUrl, { event: this.event }).subscribe(
         (response) => {
           console.log('Event added successfully:', response);
           this.router.navigate(['/event-customer-count']);
@@ -63,7 +66,7 @@ export class EventFormComponent {
           console.error('Error adding event:', error);
 
         }
-      );
+      );*/
     }
 
   }
