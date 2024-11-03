@@ -9,7 +9,7 @@
       </div>
       <div *ngFor="let menu of menusData.menu; let i=index" >
         <button (click)="openmenu(i)" class="commun-buttons"> {{ menu.name }} </button>
-        <button (click)="removeMenu(menu)" class="commun-buttons">Supprimer</button>
+        <button (click)="removeMenu(menu)" class="commun-buttons">Delete</button>
         <app-event-cart
           *ngIf="visibleCartIndex === i"
           [cart]="getItemForCart(menu)"
@@ -18,7 +18,7 @@
         </app-event-cart>
 
       </div>
-      <button (click)="openDrinks()" class="commun-buttons">  Boissons </button>
+      <button (click)="openDrinks()" class="commun-buttons">  Beverages </button>
       <app-event-cart
         [cart]="getDrinks()"
         [isVisible]="isDrinksVisible"
