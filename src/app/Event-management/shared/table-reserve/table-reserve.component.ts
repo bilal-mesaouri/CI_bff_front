@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Snackbar for notifications
@@ -26,6 +26,8 @@ import { Table } from '../../../model/model';
   styleUrl: './table-reserve.component.css'
 })
 export class TableReserveComponent {
+  @Input() routeToNavigate:string='/table-categories';
+
   serverLink: string = "http://localhost:9500/";
   tables: Table[] = [] as Table[];
   numberOfCustomers: number = 0;
@@ -92,7 +94,7 @@ export class TableReserveComponent {
        }
      );
       this.createOrder();
-      this.router.navigate(['/crate-menu']);
+      this.router.navigate([this.routeToNavigate]);
 
     }
   }

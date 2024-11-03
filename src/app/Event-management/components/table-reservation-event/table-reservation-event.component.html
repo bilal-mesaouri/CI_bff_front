@@ -12,9 +12,7 @@
   <mat-card class="overlay-card" [ngStyle]="{'transform': 'translate(-50%, -50%) rotate(' + rotation + 'deg)'}">
 
     <mat-card-content >
-      <app-table-reserve>
-
-    </app-table-reserve>
+      <app-table-reserve routeToNavigate="/crate-menu"></app-table-reserve>
     </mat-card-content>
     <button mat-raised-button (click)="rotateCard()" class="rotate-button"><mat-icon>cached</mat-icon></button>  </mat-card>
 </div>

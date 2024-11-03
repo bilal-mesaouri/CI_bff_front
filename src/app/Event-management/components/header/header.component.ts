@@ -18,7 +18,6 @@ import { EventMenuComponent } from '../event-menu/event-menu.component';
 })
 export class HeaderComponent implements OnInit {
   public  categories:Category[]=CATEGORIES
-
   constructor( public menuComponent: EventMenuComponent) {
   }
 
